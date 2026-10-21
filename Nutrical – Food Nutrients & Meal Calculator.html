@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nutrical – Food Nutrients & Meal Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f8f1;--ink:#13271b;--mute:#54695a;--card:#fff;--line:#d9e6d6;--brand:#1f7a4d;--fruit:#e0446a;--veg:#2f9e55;--base:#e8a317;--red:#d62839;--redbg:#fdecee;--ok:#1f8a4c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1913;--ink:#eaf3ea;--mute:#a0b3a5;--card:#18251d;--line:#29392f;--red:#ff6b78;--redbg:#3a1a1e;--ok:#5fd18a}}
+:root[data-theme="dark"]{--bg:#0f1913;--ink:#eaf3ea;--mute:#a0b3a5;--card:#18251d;--line:#29392f;--red:#ff6b78;--redbg:#3a1a1e;--ok:#5fd18a}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav div{max-width:820px;margin:0 auto;padding:10px 18px;display:flex;justify-content:space-between;align-items:center}
+.brand,.pill{font:inherit;border:0;cursor:pointer;color:var(--ink);background:none}
+.brand{font-weight:800;font-size:1.35rem;letter-spacing:-.02em;padding:0}
+.brand span{color:var(--brand)}
+.pill{background:var(--brand);color:#fff;font-weight:600;padding:8px 16px;border-radius:999px}
+main{max-width:820px;margin:0 auto;padding:20px 18px 56px}
+h1,h2,h3{letter-spacing:-.02em;line-height:1.1}
+h1{font-size:clamp(2rem,7vw,3rem);font-weight:800;margin:0 0 10px}
+h2{font-size:1.5rem;margin:0 0 12px}
+.sub{color:var(--mute);margin:0 0 16px}
+.hero{border-radius:28px;padding:30px 22px;color:#fff;background:radial-gradient(circle at 88% 8%,rgba(255,255,255,.28),transparent 42%),linear-gradient(135deg,#0f4a31,#1f7a4d 55%,#52b96d)}
+.hero.col{display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:var(--c);background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 65%,#000))}
+.hero h1{margin:0}.hero p{margin:6px 0 0;opacity:.95}
+.hero .big{font-size:4.2rem;line-height:1}
+.kick{display:inline-block;font-weight:600;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:999px;margin-bottom:12px}
+.hero>p{max-width:520px;margin:0 0 18px;font-size:1.08rem}
+.kcal{font-size:2.6rem;font-weight:800;line-height:1}
+.search{width:100%;font:inherit;font-size:1.05rem;padding:15px 18px;border:2px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink)}
+.hero .search{background:#fff;color:#13271b;border:0;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.search:focus-visible,.tile:focus-visible,.item:focus-visible,.back:focus-visible,.go:focus-visible,.chip:focus-visible,.qb:focus-visible,.pill:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.sec{margin-top:36px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.info{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
+.info .ic{font-size:1.9rem}.info h3{margin:6px 0 4px;font-size:1.15rem}.info p{margin:0;color:var(--mute)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tile{aspect-ratio:1;border:0;border-radius:24px;color:#fff;font:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:transform .15s;background:var(--c);background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 62%,#000));box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.tile span{font-size:clamp(2.2rem,11vw,3.4rem);line-height:1}.tile b{font-size:clamp(.95rem,3.6vw,1.3rem)}.tile small{opacity:.9}
+.tile:active{transform:scale(.96)}
+.t-fruits{--c:var(--fruit)}.t-veg{--c:var(--veg)}.t-base{--c:var(--base)}
+.cta{margin-top:40px;border-radius:28px;padding:34px 22px;text-align:center;color:#2a1d00;background:linear-gradient(135deg,#f2b632,#f7d774)}
+.cta h2{margin:0 0 6px}.cta p{margin:0 0 18px}
+.go{font:inherit;font-weight:800;font-size:1.2rem;padding:16px 32px;border:0;border-radius:999px;background:#13271b;color:#fff;cursor:pointer}
+.go.wide{display:block;width:100%;margin-top:20px;background:var(--brand)}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
+.item{display:flex;align-items:center;gap:10px;text-align:left;font:inherit;padding:12px;border-radius:16px;background:var(--card);border:1px solid var(--line);color:var(--ink);cursor:pointer;border-left:6px solid var(--c)}
+.item .e{font-size:1.7rem}.item b{display:block;font-weight:600;line-height:1.2}.item small{color:var(--mute)}
+.empty{color:var(--mute);padding:16px;border:1px dashed var(--line);border-radius:14px}
+.back{font:inherit;font-weight:600;background:none;border:2px solid var(--line);color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stat{background:var(--bg);border-radius:14px;padding:12px;text-align:center}.stat b{display:block;font-size:1.4rem}.stat small{color:var(--mute)}
+.row{display:grid;grid-template-columns:78px 1fr 64px;gap:10px;align-items:center;padding:6px 0}.row b{text-align:right}
+.bar{height:10px;border-radius:6px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;background:var(--c,var(--brand));border-radius:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;color:var(--ink);padding:7px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:.95rem}
+button.chip{cursor:pointer}
+.note{color:var(--mute);font-size:.85rem;margin-top:18px}
+.meal{border-top:6px solid var(--c)}.meal h2{margin-bottom:8px}
+.entry{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.entry .e{font-size:1.5rem}.en{flex:1;min-width:0}.en b{display:block;font-weight:600;line-height:1.2}.en small{color:var(--mute)}
+.qb{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:1.1rem;cursor:pointer}
+.sug{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.meal .search{margin-top:12px}
+.nrow{padding:10px 0;border-bottom:1px solid var(--line)}
+.nt{display:flex;justify-content:space-between;gap:10px;margin-bottom:5px}.nt span{color:var(--mute)}
+.nrow small{display:block;margin-top:5px}
+.nrow.red b,.nrow.red .nt span,.nrow.red small{color:var(--red)}.nrow.red .bar i{background:var(--red)}
+.nrow.ok .bar i{background:var(--ok)}
+.needbox{background:var(--redbg);border:2px solid var(--red);border-radius:20px;padding:18px;margin-top:16px}
+.needbox h2{color:var(--red)}
+.okbox h2{color:var(--ok)}
+.ta{margin-top:0!important;resize:vertical;min-height:88px;font-family:inherit}
+</style>
+</head>
+<body>
+<header class="nav"><div><button class="brand" data-go="#/">🥗 Nutri<span>cal</span></button><button class="pill" data-go="#/calc">Calculator</button></div></header>
+<main id="app"></main>
+<script>
+var DATA={
+fruits:{label:"Fruits",emoji:"🍎",color:"var(--fruit)",items:[
+["Apple","🍎",52,.3,13.8,.2,2.4,10.4,[["Vitamin C","4.6 mg"],["Potassium","107 mg"],["Vitamin K","2.2 µg"]]],
+["Banana","🍌",89,1.1,22.8,.3,2.6,12.2,[["Potassium","358 mg"],["Vitamin B6","0.4 mg"],["Vitamin C","8.7 mg"],["Magnesium","27 mg"]]],
+["Orange","🍊",47,.9,11.8,.1,2.4,9.4,[["Vitamin C","53 mg"],["Folate","30 µg"],["Potassium","181 mg"],["Calcium","40 mg"]]],
+["Mango","🥭",60,.8,15,.4,1.6,13.7,[["Vitamin C","36 mg"],["Vitamin A","54 µg"],["Folate","43 µg"]]],
+["Strawberry","🍓",32,.7,7.7,.3,2,4.9,[["Vitamin C","59 mg"],["Manganese","0.4 mg"],["Folate","24 µg"]]],
+["Grapes","🍇",69,.7,18.1,.2,.9,15.5,[["Vitamin K","14.6 µg"],["Vitamin C","3.2 mg"],["Potassium","191 mg"]]],
+["Watermelon","🍉",30,.6,7.6,.2,.4,6.2,[["Vitamin C","8.1 mg"],["Vitamin A","28 µg"],["Potassium","112 mg"]]],
+["Pineapple","🍍",50,.5,13.1,.1,1.4,9.9,[["Vitamin C","47.8 mg"],["Manganese","0.9 mg"],["Vitamin B6","0.1 mg"]]],
+["Papaya","🍈",43,.5,10.8,.3,1.7,7.8,[["Vitamin C","61.8 mg"],["Vitamin A","47 µg"],["Folate","37 µg"]]],
+["Pear","🍐",57,.4,15.2,.1,3.1,9.8,[["Vitamin C","4.3 mg"],["Vitamin K","4.4 µg"],["Potassium","116 mg"]]],
+["Pomegranate","🔴",83,1.7,18.7,1.2,4,13.7,[["Vitamin K","16.4 µg"],["Vitamin C","10.2 mg"],["Folate","38 µg"],["Potassium","236 mg"]]],
+["Avocado","🥑",160,2,8.5,14.7,6.7,.7,[["Vitamin K","21 µg"],["Folate","81 µg"],["Potassium","485 mg"],["Vitamin E","2.1 mg"]]],
+["Peach","🍑",39,.9,9.5,.3,1.5,8.4,"vc6.6;va16;pot190",150,"1 medium"],
+["Plum","🟣",46,.7,11.4,.3,1.4,9.9,"vc9.5;vk6.4;pot157",66,"1 medium"],
+["Cherries","🍒",63,1.1,16,.2,2.1,12.8,"vc7;pot222;mn.1",140,"1 cup"],
+["Blueberries","🫐",57,.7,14.5,.3,2.4,10,"vk19.3;vc9.7;mn.3",148,"1 cup"],
+["Raspberries","🔴",52,1.2,11.9,.7,6.5,4.4,"vc26.2;mn.7;vk7.8",123,"1 cup"],
+["Blackberries","⚫",43,1.4,9.6,.5,5.3,4.9,"vc21;vk19.8;mn.6",144,"1 cup"],
+["Kiwi","🥝",61,1.1,14.7,.5,3,9,"vc92.7;vk40;pot312",69,"1 medium"],
+["Lemon","🍋",29,1.1,9.3,.3,2.8,2.5,"vc53;pot138;ca26",58,"1 fruit"],
+["Lime","🟢",30,.7,10.5,.2,2.8,1.7,"vc29.1;ca33;pot102",67,"1 fruit"],
+["Grapefruit","🍊",42,.8,10.7,.1,1.6,6.9,"vc31.2;va46;pot135",123,"½ fruit"],
+["Apricot","🍑",48,1.4,11.1,.4,2,9.2,"va96;vc10;pot259",35,"1 fruit"],
+["Fig","🟣",74,.8,19.2,.3,2.9,16.3,"pot232;ca35;vk4.7",50,"1 medium"],
+["Cantaloupe","🍈",34,.8,8.2,.2,.9,7.9,"vc36.7;va169;pot267",160,"1 cup cubes"],
+["Honeydew melon","🍈",36,.5,9.1,.1,.8,8.1,"vc18;pot228;fol19",170,"1 cup cubes"],
+["Coconut meat","🥥",354,3.3,15.2,33.5,9,6.2,"mn1.5;se10.1;fe2.4",45,"1 piece"],
+["Guava","🍐",68,2.6,14.3,1,5.4,8.9,"vc228;fol49;pot417",55,"1 fruit"],
+["Dates","🌴",277,1.8,75,.2,6.7,66.5,"pot696;mg54;mn.3",24,"1 Medjool date"],
+["Passion fruit","🟡",97,2.2,23.4,.7,10.4,11.2,"vc30;va64;pot348",18,"1 fruit"],
+["Lychee","🍒",66,.8,16.5,.4,1.3,15.2,"vc71.5;pot171;fol14",10,"1 fruit"],
+["Cranberries","🔴",46,.4,12.2,.1,4.6,4,"vc13.3;vk5;mn.4",110,"1 cup"],
+["Tangerine","🍊",53,.8,13.3,.3,1.8,10.6,"vc26.7;va34;fol16",88,"1 medium"],
+["Nectarine","🍑",44,1.1,10.6,.3,1.7,7.9,"vc5.4;va17;pot201",142,"1 medium"],
+["Persimmon","🟠",70,.6,18.6,.2,3.6,12.5,"va81;vc7.5;mn.4",168,"1 fruit"],
+["Jackfruit","🍈",95,1.7,23.3,.6,1.5,19.1,"vc13.7;pot448;mg29",165,"1 cup"],
+["Starfruit","⭐",31,1,6.7,.3,2.8,4,"vc34.4;pot133;fol12",91,"1 fruit"],
+["Dragon fruit","🐉",60,1.2,13,0,3,8,"vc3;mg36;fe.7",100,"1 cup"]
+]},
+veg:{label:"Vegetables",emoji:"🥦",color:"var(--veg)",items:[
+["Carrot","🥕",41,.9,9.6,.2,2.8,4.7,[["Vitamin A","835 µg"],["Vitamin K","13.2 µg"],["Potassium","320 mg"]]],
+["Spinach","🥬",23,2.9,3.6,.4,2.2,.4,[["Vitamin K","483 µg"],["Vitamin A","469 µg"],["Folate","194 µg"],["Iron","2.7 mg"]]],
+["Broccoli","🥦",34,2.8,6.6,.4,2.6,1.7,[["Vitamin C","89 mg"],["Vitamin K","102 µg"],["Folate","63 µg"]]],
+["Tomato","🍅",18,.9,3.9,.2,1.2,2.6,[["Vitamin C","13.7 mg"],["Potassium","237 mg"],["Vitamin K","7.9 µg"]]],
+["Potato","🥔",77,2,17.5,.1,2.2,.8,[["Potassium","421 mg"],["Vitamin C","19.7 mg"],["Vitamin B6","0.3 mg"]]],
+["Onion","🧅",40,1.1,9.3,.1,1.7,4.2,[["Vitamin C","7.4 mg"],["Potassium","146 mg"],["Folate","19 µg"]]],
+["Cucumber","🥒",15,.7,3.6,.1,.5,1.7,[["Vitamin K","16.4 µg"],["Potassium","147 mg"],["Vitamin C","2.8 mg"]]],
+["Cauliflower","🥬",25,1.9,5,.3,2,1.9,[["Vitamin C","48.2 mg"],["Vitamin K","15.5 µg"],["Folate","57 µg"]]],
+["Sweet potato","🍠",86,1.6,20.1,.1,3,4.2,[["Vitamin A","709 µg"],["Potassium","337 mg"],["Vitamin C","2.4 mg"]]],
+["Red bell pepper","🫑",31,1,6,.3,2.1,4.2,[["Vitamin C","128 mg"],["Vitamin A","157 µg"],["Vitamin B6","0.3 mg"]]],
+["Cabbage","🥬",25,1.3,5.8,.1,2.5,3.2,[["Vitamin C","36.6 mg"],["Vitamin K","76 µg"],["Folate","43 µg"]]],
+["Green peas","🫛",81,5.4,14.5,.4,5.7,5.7,[["Vitamin C","40 mg"],["Vitamin K","24.8 µg"],["Folate","65 µg"],["Iron","1.5 mg"]]],
+["Lettuce","🥬",15,1.4,2.9,.2,1.3,.8,"vk126;va370;fol38",36,"1 cup shredded"],
+["Kale","🥬",49,4.3,8.8,.9,3.6,2.3,"vk705;vc120;va500",67,"1 cup chopped"],
+["Zucchini","🥒",17,1.2,3.1,.3,1,2.5,"vc17.9;pot261;bx.2",196,"1 medium"],
+["Eggplant","🍆",25,1,5.9,.2,3,3.5,"mn.2;pot229;vk3.5",82,"1 cup cubes"],
+["Mushroom","🍄",22,3.1,3.3,.3,1,2,"ni3.6;pot318;se9.3",70,"1 cup sliced"],
+["Garlic","🧄",149,6.4,33,.5,2.1,1,"vc31.2;mn1.7;bx1.2",3,"1 clove"],
+["Ginger","🫚",80,1.8,17.8,.8,2,1.7,"pot415;mg43",6,"1 tbsp"],
+["Beetroot","🟣",43,1.6,9.6,.2,2.8,6.8,"fol109;mn.3;pot325",82,"1 medium"],
+["Radish","🔴",16,.7,3.4,.1,1.6,1.9,"vc14.8;fol25;pot233",116,"1 cup sliced"],
+["Celery","🥬",16,.7,3,.2,1.6,1.3,"vk29.3;pot260;fol36",40,"1 stalk"],
+["Asparagus","🌿",20,2.2,3.9,.1,2.1,1.9,"vk41.6;fol52;vc5.6",134,"1 cup"],
+["Green beans","🫛",31,1.8,7,.2,2.7,3.3,"vk43;vc12.2;fol33",110,"1 cup"],
+["Sweet corn","🌽",86,3.3,19,1.4,2,6.3,"fol42;mg37;pot270",90,"½ cup kernels"],
+["Pumpkin","🎃",26,1,6.5,.1,.5,2.8,"va426;vc9;pot340",116,"1 cup cubes"],
+["Butternut squash","🎃",45,1,11.7,.1,2,2.2,"va532;vc21;pot352",140,"1 cup cubes"],
+["Brussels sprouts","🥬",43,3.4,9,.3,3.8,2.2,"vk177;vc85;fol61",88,"1 cup"],
+["Leek","🌿",61,1.5,14.2,.3,1.8,3.9,"vk47;va83;mn.5",89,"1 medium"],
+["Okra","🌿",33,1.9,7.5,.2,3.2,1.5,"vc23;vk31;fol60",100,"1 cup"],
+["Turnip","⚪",28,.9,6.4,.1,1.8,3.8,"vc21;pot191;ca30",130,"1 cup cubes"],
+["Spring onion","🌱",32,1.8,7.3,.2,2.6,2.3,"vk207;vc18.8;va50",50,"½ cup chopped"],
+["Bok choy","🥬",13,1.5,2.2,.2,1,1.2,"vc45;va223;vk45.5",70,"1 cup shredded"],
+["Artichoke","🌿",47,3.3,10.5,.2,5.4,1,"fol68;vk14.8;mg60",120,"1 medium"],
+["Chili pepper","🌶️",40,1.9,8.8,.4,1.5,5.3,"vc144;va48;bx.5",45,"1 pepper"],
+["Green bell pepper","🫑",20,.9,4.6,.2,1.7,2.4,"vc80.4;vk7.4;bx.2",119,"1 medium"],
+["Yam","🍠",118,1.5,27.9,.2,4.1,.5,"pot816;mn.4;vc17.1",136,"1 cup cubes"],
+["Cassava","🥔",160,1.4,38,.3,1.8,1.7,"vc20.6;pot271;fol27",100,"½ cup"],
+["Edamame","🫛",121,11.9,8.9,5.2,5.2,2.2,"fol311;vk26.7;fe2.3",78,"½ cup shelled"],
+["Fennel","🌿",31,1.2,7.3,.2,3.1,3.9,"vc12;pot414;mn.2",87,"1 cup sliced"],
+["Collard greens","🥬",32,3,5.4,.6,4,.5,"vk437;va251;vc35.3",36,"1 cup chopped"],
+["Swiss chard","🥬",19,1.8,3.7,.2,1.6,1.1,"vk830;va306;vc30",36,"1 cup chopped"],
+["Arugula","🌱",25,2.6,3.7,.7,1.6,2.1,"vk109;va119;fol97",20,"1 cup"],
+["Parsnip","🥕",75,1.2,18,.3,4.9,4.8,"vc17;fol67;pot375",133,"1 cup sliced"],
+["Bitter gourd","🥒",17,1,3.7,.2,2.8,1,"vc84;fol72;va6",94,"1 cup sliced"]
+]},
+base:{label:"Basic foods",emoji:"🍚",color:"var(--base)",items:[
+["White rice (cooked)","🍚",130,2.7,28.2,.3,.4,.1,[["Manganese","0.5 mg"],["Selenium","7.5 µg"]]],
+["White bread","🍞",265,9,49,3.2,2.7,5.7,[["Iron","3.6 mg"],["Calcium","144 mg"],["Folate","111 µg"],["Sodium","491 mg"]]],
+["Egg (boiled)","🥚",155,12.6,1.1,10.6,0,1.1,[["Vitamin B12","1.1 µg"],["Vitamin D","2.2 µg"],["Choline","294 mg"],["Selenium","30.8 µg"]]],
+["Whole milk","🥛",61,3.2,4.8,3.3,0,5.1,[["Calcium","113 mg"],["Vitamin B12","0.5 µg"],["Potassium","132 mg"],["Vitamin D","1.3 µg"]]],
+["Chicken breast (cooked)","🍗",165,31,0,3.6,0,0,[["Niacin","13.7 mg"],["Vitamin B6","0.6 mg"],["Phosphorus","228 mg"],["Selenium","27.6 µg"]]],
+["Lentils (cooked)","🫘",116,9,20.1,.4,7.9,1.8,[["Folate","181 µg"],["Iron","3.3 mg"],["Potassium","369 mg"]]],
+["Chickpeas (cooked)","🫘",164,8.9,27.4,2.6,7.6,4.8,[["Folate","172 µg"],["Iron","2.9 mg"],["Manganese","1 mg"]]],
+["Oats (dry)","🥣",389,16.9,66.3,6.9,10.6,0,[["Manganese","4.9 mg"],["Phosphorus","523 mg"],["Iron","4.7 mg"],["Magnesium","177 mg"]]],
+["Pasta (cooked)","🍝",158,5.8,30.9,.9,1.8,.6,[["Manganese","0.4 mg"],["Iron","1.3 mg"]]],
+["Cheddar cheese","🧀",403,24.9,1.3,33.1,0,.5,[["Calcium","721 mg"],["Phosphorus","512 mg"],["Vitamin B12","1.1 µg"]]],
+["Almonds","🥜",579,21.2,21.6,49.9,12.5,4.4,[["Vitamin E","25.6 mg"],["Magnesium","270 mg"],["Calcium","269 mg"]]],
+["Salmon (cooked)","🐟",206,22,0,12,0,0,[["Vitamin D","11 µg"],["Vitamin B12","3.2 µg"],["Selenium","36.5 µg"],["Potassium","384 mg"]]],
+["Brown rice (cooked)","🍚",123,2.7,25.6,1,1.6,.2,"mn.9;mg39;ph103",195,"1 cup"],
+["Quinoa (cooked)","🌾",120,4.4,21.3,1.9,2.8,.9,"mn.6;mg64;fol42",185,"1 cup"],
+["Whole wheat bread","🍞",252,12.5,43,3.5,7,6,"fe2.4;mg82;se40",28,"1 slice"],
+["Flour tortilla","🫓",306,8.2,51,8,2.8,2.4,"fe3.5;ca140",45,"1 tortilla"],
+["Corn tortilla","🫓",218,5.7,44.6,2.9,6.3,.6,"ca81;mg54;mn.4",26,"1 tortilla"],
+["Popcorn (air-popped)","🍿",387,13,78,4.5,14.5,.9,"mn1.1;mg144;ph358",24,"3 cups"],
+["Barley (cooked)","🌾",123,2.3,28.2,.4,3.8,.3,"mn.3;ni2.1;mg22",157,"1 cup"],
+["Couscous (cooked)","🍲",112,3.8,23.2,.2,1.4,.1,"se27;ni1;mg8",157,"1 cup"],
+["Whole wheat pasta (cooked)","🍝",124,5.3,26.5,.5,3.9,.6,"mn.9;mg42;fe1.5",140,"1 cup"],
+["Plain yogurt (whole milk)","🥛",61,3.5,4.7,3.3,0,4.7,"ca121;by.5;pot155",245,"1 cup"],
+["Greek yogurt (nonfat)","🥛",59,10.2,3.6,.4,0,3.2,"ca110;by.8;pot141",170,"¾ cup"],
+["Skim milk","🥛",34,3.4,5,.1,0,5.1,"ca122;by.5;pot166",245,"1 cup"],
+["Butter","🧈",717,.9,.1,81,0,.1,"va684;ve2.3;vk7",14,"1 tbsp"],
+["Mozzarella cheese","🧀",280,28,3.1,17,0,1.2,"ca505;ph354;by2.3",28,"1 oz"],
+["Cottage cheese","🧀",98,11.1,3.4,4.3,0,2.7,"ca83;by.4;se9.7",113,"½ cup"],
+["Soy milk","🥛",33,2.9,1.7,1.6,.4,.4,"ca120;pot118;vd1",243,"1 cup"],
+["Almond milk (unsweetened)","🥛",15,.6,.3,1.2,.2,0,"ca120;ve4",240,"1 cup"],
+["Beef (lean, cooked)","🥩",250,26,0,15,0,0,"zn6.3;by2.6;fe2.6",85,"3 oz"],
+["Pork loin (cooked)","🥩",242,27,0,14,0,0,"se40;by.7;zn2.4",85,"3 oz"],
+["Turkey breast (cooked)","🦃",135,30,0,.7,0,0,"ni11;bx.8;se31",85,"3 oz"],
+["Lamb (cooked)","🍖",294,25,0,21,0,0,"by2.6;zn4.6;fe1.9",85,"3 oz"],
+["Chicken thigh (cooked)","🍗",209,26,0,10.9,0,0,"ni6.1;bx.4;se21",85,"3 oz"],
+["Tuna (canned in water)","🐟",116,25.5,0,.8,0,0,"se76;ni10;vd1.7",85,"3 oz"],
+["Shrimp (cooked)","🦐",99,24,.2,.3,0,0,"se38;by1.2;ca64",85,"3 oz"],
+["Cod (cooked)","🐟",105,23,0,.9,0,0,"by1;se37;pot244",85,"3 oz"],
+["Sardines (canned)","🐟",208,24.6,0,11.5,0,0,"ca382;vd4.8;by8.9",92,"1 can"],
+["Tilapia (cooked)","🐟",128,26,0,2.7,0,0,"se54;by1.6;ni4.7",85,"3 oz"],
+["Black beans (cooked)","🫘",132,8.9,23.7,.5,8.7,.3,"fol149;mn.4;fe2.1",172,"1 cup"],
+["Kidney beans (cooked)","🫘",127,8.7,22.8,.5,6.4,.3,"fol130;fe2.9;pot403",177,"1 cup"],
+["Tofu (firm)","🟨",144,17.3,2.8,8.7,2.3,.6,"ca350;fe2.7;mn1.2",126,"½ cup"],
+["Hummus","🥣",166,7.9,14.3,9.6,6,.3,"fe2.4;mg71;ca38",30,"2 tbsp"],
+["Peanut butter","🥜",588,25,20,50,6,9,"ni13.1;mg168;ve9",32,"2 tbsp"],
+["Peanuts","🥜",567,25.8,16.1,49.2,8.5,4.7,"ni12;mg168;fol240",28,"1 oz"],
+["Walnuts","🌰",654,15.2,13.7,65.2,6.7,2.6,"mn3.4;mg158;ph346",28,"1 oz"],
+["Cashews","🥜",553,18.2,30.2,43.9,3.3,5.9,"mg292;zn5.8;mn1.7",28,"1 oz"],
+["Chia seeds","🌱",486,16.5,42.1,30.7,34.4,0,"ca631;mg335;ph860",28,"2 tbsp"],
+["Flaxseed","🌱",534,18.3,28.9,42.2,27.3,1.6,"mg392;mn2.5;ph642",10,"1 tbsp"],
+["Sunflower seeds","🌻",584,20.8,20,51.5,8.6,2.6,"ve35;mg325;se53",28,"1 oz"],
+["Pumpkin seeds","🎃",559,30.2,10.7,49,6,1.4,"mg592;zn7.8;mn4.5",28,"1 oz"],
+["Olive oil","🫒",884,0,0,100,0,0,"ve14;vk60",13.5,"1 tbsp"],
+["Honey","🍯",304,.3,82.4,0,.2,82.1,"pot52;ca6",21,"1 tbsp"],
+["Dark chocolate (70–85%)","🍫",598,7.8,45.9,42.6,10.9,24,"fe11.9;mg228;mn1.9",28,"1 oz"]
+]}};
+
+var SERV={"Apple":[182,"1 medium"],"Banana":[118,"1 medium"],"Orange":[131,"1 medium"],"Mango":[165,"1 cup sliced"],"Strawberry":[152,"1 cup"],"Grapes":[151,"1 cup"],"Watermelon":[152,"1 cup diced"],"Pineapple":[165,"1 cup chunks"],"Papaya":[145,"1 cup cubes"],"Pear":[178,"1 medium"],"Pomegranate":[87,"½ cup seeds"],"Avocado":[100,"½ fruit"],
+"Carrot":[61,"1 medium"],"Spinach":[30,"1 cup raw"],"Broccoli":[91,"1 cup chopped"],"Tomato":[123,"1 medium"],"Potato":[173,"1 medium"],"Onion":[110,"1 medium"],"Cucumber":[104,"1 cup sliced"],"Cauliflower":[107,"1 cup"],"Sweet potato":[130,"1 medium"],"Red bell pepper":[119,"1 medium"],"Cabbage":[89,"1 cup shredded"],"Green peas":[145,"1 cup"],
+"White rice (cooked)":[158,"1 cup"],"White bread":[25,"1 slice"],"Egg (boiled)":[50,"1 large"],"Whole milk":[244,"1 cup"],"Chicken breast (cooked)":[85,"3 oz"],"Lentils (cooked)":[198,"1 cup"],"Chickpeas (cooked)":[164,"1 cup"],"Oats (dry)":[40,"½ cup"],"Pasta (cooked)":[140,"1 cup"],"Cheddar cheese":[28,"1 oz slice"],"Almonds":[28,"1 oz (23 nuts)"],"Salmon (cooked)":[85,"3 oz fillet"]};
+var MN={vc:["Vitamin C","mg"],va:["Vitamin A","µg"],vk:["Vitamin K","µg"],ve:["Vitamin E","mg"],bx:["Vitamin B6","mg"],fol:["Folate","µg"],ca:["Calcium","mg"],fe:["Iron","mg"],pot:["Potassium","mg"],mg:["Magnesium","mg"],mn:["Manganese","mg"],se:["Selenium","µg"],ni:["Niacin","mg"],vd:["Vitamin D","µg"],by:["Vitamin B12","µg"],ph:["Phosphorus","mg"],zn:["Zinc","mg"]};
+function fmt(n){return n>=10?Math.round(n):Math.round(n*10)/10}
+// Converts per-100 g data into one serving
+function sv(x){
+  var g,l,m;
+  if(typeof x[8]==="string"){g=x[9];l=x[10];m=x[8].split(";").map(function(t){var r=/^([a-z]+)([\d.]+)$/.exec(t);return[MN[r[1]][0],parseFloat(r[2]),MN[r[1]][1]]})}
+  else{var S=SERV[x[0]];g=S[0];l=S[1];m=x[8].map(function(v){var p=v[1].split(" ");return[v[0],parseFloat(p[0]),p[1]]})}
+  var f=g/100;
+  return{kcal:Math.round(x[2]*f),p:fmt(x[3]*f),c:fmt(x[4]*f),f:fmt(x[5]*f),fi:fmt(x[6]*f),s:fmt(x[7]*f),g:g,label:l,micro:m.map(function(v){return[v[0],fmt(v[1]*f)+" "+v[2]]})};
+}
+var app=document.getElementById("app");
+
+// Nutrient list for searching by nutrient (name, unit, serving key for macros, aliases)
+var NUTS=[{n:"Protein",u:"g",k:"p",al:[]},{n:"Carbs",u:"g",k:"c",al:["carbohydrates","carbohydrate","carb"]},{n:"Fat",u:"g",k:"f",al:["fats"]},{n:"Fiber",u:"g",k:"fi",al:["fibre"]},{n:"Sugar",u:"g",k:"s",al:["sugars"]},{n:"Calories",u:"kcal",k:"kcal",al:["calorie","energy"]}];
+Object.keys(MN).forEach(function(c){
+  var nm=MN[c][0],al=[];
+  if(nm.indexOf("Vitamin ")===0){var L=nm.slice(8).toLowerCase();al=[L,"vit "+L,"vit"+L,"vitamin"+L]}
+  if(nm==="Folate")al=["folic acid","b9","vitamin b9"];
+  NUTS.push({n:nm,u:MN[c][1],k:null,al:al});
+});
+function findNuts(t){
+  return NUTS.filter(function(nu){
+    var name=nu.n.toLowerCase();
+    if(name===t||nu.al.indexOf(t)>-1)return true;
+    if(t.length<3)return false;
+    return name.indexOf(t)>-1||nu.al.some(function(a){return a.indexOf(t)===0});
+  });
+}
+function amt(x,nu){
+  var s=sv(x);
+  if(nu.k)return s[nu.k];
+  for(var i=0;i<s.micro.length;i++)if(s.micro[i][0]===nu.n)return parseFloat(s.micro[i][1]);
+  return 0;
+}
+
+
+var meals={breakfast:[],lunch:[],dinner:[]};
+var MEAL=[["breakfast","Breakfast","🌅","var(--base)"],["lunch","Lunch","☀️","var(--veg)"],["dinner","Dinner","🌙","var(--fruit)"]];
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function itemBtn(cat,i,x,sm){
+  return '<button class="item" style="--c:'+DATA[cat].color+'" data-go="#/item/'+cat+'/'+i+'"><span class="e">'+x[1]+'</span><span><b>'+esc(x[0])+'</b><small>'+(sm||sv(x).kcal+' kcal')+'</small></span></button>';
+}
+
+// PAGE 1: home
+function home(cat){
+  var tiles=Object.keys(DATA).map(function(k){var d=DATA[k];
+    return '<button class="tile t-'+k+'" data-go="#/cat/'+k+'"><span>'+d.emoji+'</span><b>'+d.label+'</b><small>'+d.items.length+' foods</small></button>';
+  }).join("");
+  app.innerHTML='<section class="hero"><div class="kick">🥗 Nutrical</div><h1>Know what is on your plate.</h1><p>Look up calories and nutrients in everyday foods, then check a whole day of meals.</p>'+
+    '<input class="search" id="q" type="search" placeholder="Search a food or nutrient, e.g. iron" aria-label="Search foods" autocomplete="off"></section>'+
+    '<div id="out" style="margin-top:20px"></div>'+
+    '<section class="sec"><h2>What is nutrition?</h2><p class="sub">Nutrition is how the food you eat gives your body the energy and building blocks it needs to grow, move, think and stay healthy. A balanced diet gives you enough of every nutrient without too many extra calories.</p>'+
+    '<div class="grid3"><div class="info"><div class="ic">⚡</div><h3>Calories</h3><p>The energy in food, measured in kcal. Most adults need around 2,000 kcal a day.</p></div>'+
+    '<div class="info"><div class="ic">💪</div><h3>Macronutrients</h3><p>Protein, carbohydrates and fat give energy, build muscle and keep you full. Fiber keeps digestion healthy.</p></div>'+
+    '<div class="info"><div class="ic">🍊</div><h3>Vitamins and minerals</h3><p>Tiny amounts that protect your bones, blood, skin and immune system. Variety is the key.</p></div></div></section>'+
+    '<section class="sec"><h2>Explore foods</h2><p class="sub">Pick a category to see every food and its nutrients per serving.</p><div class="tiles">'+tiles+'</div></section>'+
+    '<section class="cta"><h2>How was your day of eating?</h2><p>Type what you ate, any food from anywhere, and get an estimate of what you got and what is missing.</p><button class="go" data-go="#/calc">Let’s calculate →</button></section>';
+  var q=document.getElementById("q");
+  function draw(){
+    var t=q.value.trim().toLowerCase(),h="";
+    if(t){
+      var n=0,fh="",nuts=findNuts(t);
+      Object.keys(DATA).forEach(function(k){DATA[k].items.forEach(function(x,i){
+        if(x[0].toLowerCase().indexOf(t)>-1){fh+=itemBtn(k,i,x);n++}
+      })});
+      var foodsBlock=(n&&(!nuts.length||t.length>=3))?'<h2 style="margin-top:22px">Foods named “'+esc(q.value)+'”</h2><div class="list">'+fh+'</div>':'';
+      if(nuts.length===1){
+        var nu=nuts[0],rows=[];
+        Object.keys(DATA).forEach(function(k){DATA[k].items.forEach(function(x,i){var a=amt(x,nu);if(a>0)rows.push([k,i,x,a,sv(x)])})});
+        rows.sort(function(a,b){return b[3]-a[3]});
+        h='<h2>Foods with '+esc(nu.n)+'</h2><p class="sub" style="margin:0 0 12px">Per serving, highest first'+(rows.length>40?' (top 40)':'')+'.</p><div class="list">'+rows.slice(0,40).map(function(r){return itemBtn(r[0],r[1],r[2],fmt(r[3])+" "+nu.u+" · "+r[4].label)}).join("")+'</div>'+foodsBlock;
+      }else if(nuts.length>1){
+        h='<h2>Which nutrient?</h2><div class="chips">'+nuts.map(function(nu){return '<button class="chip" data-nut="'+esc(nu.n)+'">'+esc(nu.n)+'</button>'}).join("")+'</div>'+foodsBlock;
+      }else{
+        h=n?'<h2>Results</h2><div class="list">'+fh+'</div>':'<div class="empty">No food or nutrient matches “'+esc(q.value)+'”. Try another name.</div>';
+      }
+    }else if(cat){
+      h='<h2>'+DATA[cat].label+'</h2><div class="list">'+DATA[cat].items.map(function(x,i){return itemBtn(cat,i,x)}).join("")+'</div>';
+    }else{
+      h="";
+    }
+    document.getElementById("out").innerHTML=h;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-nut]"),function(b){
+      b.addEventListener("click",function(){q.value=b.getAttribute("data-nut");draw();q.focus()});
+    });
+  }
+  q.addEventListener("input",draw);draw();
+}
+
+// PAGE 2: foods in one category
+var BL={fruits:"Sweet, juicy and rich in vitamin C.",veg:"Low in calories, high in vitamins and fiber.",base:"Grains, dairy, meat, fish, beans, nuts and seeds."};
+function category(cat){
+  var c=DATA[cat];
+  app.innerHTML='<button class="back" data-go="#/">← Home</button>'+
+    '<section class="hero col" style="--c:'+c.color+'"><div class="big">'+c.emoji+'</div><div><h1>'+c.label+'</h1><p>'+c.items.length+' foods. '+BL[cat]+'</p></div></section>'+
+    '<input class="search" id="cq" type="search" placeholder="Filter '+c.label.toLowerCase()+'" aria-label="Filter foods" style="margin:18px 0" autocomplete="off"><div id="cl"></div>';
+  var q=document.getElementById("cq");
+  function draw(){
+    var t=q.value.trim().toLowerCase(),h="";
+    c.items.forEach(function(x,i){if(x[0].toLowerCase().indexOf(t)>-1)h+=itemBtn(cat,i,x)});
+    document.getElementById("cl").innerHTML=h?'<div class="list">'+h+'</div>':'<div class="empty">No food matches “'+esc(q.value)+'”.</div>';
+  }
+  q.addEventListener("input",draw);draw();window.scrollTo(0,0);
+}
+
+// PAGE 3: one food
+function detail(cat,i){
+  var c=DATA[cat],x=c&&c.items[i];
+  if(!x){location.hash="#/";return}
+  var s=sv(x);
+  var rows=[["Fiber",s.fi,28],["Sugar",s.s,50]].map(function(m){
+    return '<div class="row"><span>'+m[0]+'</span><div class="bar"><i style="width:'+Math.min(100,m[1]/m[2]*100)+'%"></i></div><b>'+m[1]+' g</b></div>';
+  }).join("");
+  var chips=s.micro.map(function(v){return '<span class="chip">'+esc(v[0])+' <b>'+v[1]+'</b></span>'}).join("");
+  app.innerHTML='<button class="back" data-go="#/cat/'+cat+'">← Back to '+c.label+'</button>'+
+    '<section class="hero col" style="--c:'+c.color+'"><div class="big">'+x[1]+'</div><div><h1>'+esc(x[0])+'</h1><p>1 serving: '+esc(s.label)+' ('+s.g+' g)</p></div>'+
+    '<div style="margin-left:auto;text-align:right"><div class="kcal">'+s.kcal+'</div><p>calories (kcal)</p></div></section>'+
+    '<section class="card" style="--c:'+c.color+'"><h2>Main nutrients</h2><div class="stats"><div class="stat"><b>'+s.p+'g</b><small>Protein</small></div><div class="stat"><b>'+s.c+'g</b><small>Carbs</small></div><div class="stat"><b>'+s.f+'g</b><small>Fat</small></div></div>'+rows+'</section>'+
+    '<section class="card"><h2>Vitamins and minerals</h2><div class="chips">'+chips+'</div></section>'+
+    '<p class="note">Values are for one serving and are approximate.</p>';
+  window.scrollTo(0,0);
+}
+
+// PAGE 4: calculator (free text for breakfast, lunch and dinner)
+var mealTxt={breakfast:"",lunch:"",dinner:""},est=null,estKey="";
+var PH={breakfast:"e.g. 2 boiled eggs, toast with butter and a cup of chai",lunch:"e.g. a plate of chicken biryani with raita",dinner:"e.g. 2 slices of pizza and a small salad"};
+function allFoods(){var a=[];Object.keys(DATA).forEach(function(k){DATA[k].items.forEach(function(x,i){a.push([k,i,x])})});return a}
+function calc(){
+  app.innerHTML='<h1>Let’s calculate</h1><p class="sub">Type what you ate in your own words. Any food from anywhere works, and exact amounts are not needed. If you skip the amount, a normal portion is estimated and you get a range.</p>'+
+    MEAL.map(function(m){return '<section class="card meal" style="--c:'+m[3]+'"><h2>'+m[2]+' '+m[1]+'</h2><textarea class="search ta" data-m="'+m[0]+'" rows="3" aria-label="'+m[1]+'" placeholder="'+PH[m[0]]+'">'+esc(mealTxt[m[0]])+'</textarea></section>'}).join("")+
+    '<button class="go wide" data-go="#/results">Calculate my nutrition</button>';
+  Array.prototype.forEach.call(document.querySelectorAll("[data-m]"),function(el){
+    el.addEventListener("input",function(){mealTxt[el.getAttribute("data-m")]=el.value});
+  });
+  window.scrollTo(0,0);
+}
+
+// PAGE 5: results (estimated by Claude, shown as ranges)
+var DV=[["Protein","g",50],["Carbs","g",275],["Fat","g",78],["Fiber","g",28],["Vitamin C","mg",90],["Vitamin A","µg",900],["Vitamin K","µg",120],["Vitamin E","mg",15],["Vitamin B6","mg",1.7],["Vitamin B12","µg",2.4],["Vitamin D","µg",15],["Folate","µg",400],["Calcium","mg",1000],["Iron","mg",18],["Potassium","mg",3400],["Magnesium","mg",400],["Manganese","mg",2.3],["Phosphorus","mg",700],["Selenium","µg",55],["Niacin","mg",16],["Zinc","mg",11]];
+function topFoods(name){
+  var nu=NUTS.filter(function(n){return n.n===name})[0];
+  return allFoods().map(function(a){return[a[2][0],amt(a[2],nu)]}).sort(function(a,b){return b[1]-a[1]}).slice(0,3).map(function(a){return a[0].toLowerCase()}).join(", ");
+}
+function rng(r){var a=fmt(r[0]),b=fmt(r[1]);return a===b?String(a):a+"–"+b}
+function sumR(items,get){var lo=0,hi=0;items.forEach(function(it){var r=get(it)||[0,0];lo+=+r[0]||0;hi+=+r[1]||0});return[lo,hi]}
+async function askClaude(){
+  var sample=window.claude&&await claude.use("sample");
+  if(!sample)throw{code:"unavailable"};
+  var micro=DV.slice(4).map(function(d){return d[0]+" ("+d[1]+")"}).join(", ");
+  var p='You are a nutrition estimator. A person ate these meals (free text, any language, any cuisine):\n'+MEAL.map(function(m){return m[1]+': '+(mealTxt[m[0]].trim()||"(nothing)")}).join("\n")+
+   '\nFor every food, estimate the nutrition for the amount eaten. If the amount is missing or vague, assume a typical adult portion, say what you assumed, and widen the range. Use a narrow range when the amount is exact. Return ONLY valid JSON, no markdown, in this shape: {"items":[{"meal":"breakfast|lunch|dinner","food":"short name","assumed":"amount used, e.g. 1 plate, about 300 g","kcal":[min,max],"Protein":[min,max],"Carbs":[min,max],"Fat":[min,max],"Fiber":[min,max],"Sugar":[min,max],"micro":{"Vitamin C":[min,max]}}],"notes":"one short sentence about the main assumptions"}. Macros are in grams. The micro object must include every one of these keys with the stated unit, using [0,0] when negligible: '+micro+'. Numbers only, no text inside the arrays.';
+  return sample.json(p);
+}
+function results(){
+  var key=JSON.stringify(mealTxt),back='<button class="back" data-go="#/calc">← Edit meals</button>';
+  if(!MEAL.some(function(m){return mealTxt[m[0]].trim()})){app.innerHTML=back+'<div class="empty">Type at least one food in a meal first.</div>';return}
+  if(est&&estKey===key){showR(est);return}
+  app.innerHTML=back+'<div class="card" style="text-align:center"><div style="font-size:3rem">🧮</div><h2>Estimating your nutrition…</h2><p class="sub">Reading your meals and estimating portions. This takes a few seconds.</p></div>';
+  window.scrollTo(0,0);
+  askClaude().then(function(r){
+    if(!r||!Array.isArray(r.items))throw{code:"bad"};
+    est=r;estKey=key;
+    if(location.hash==="#/results")showR(r);
+  }).catch(function(e){
+    if(location.hash!=="#/results")return;
+    var msg=e&&e.code==="not_granted"?"You chose not to allow estimates. Allow it to use the calculator.":e&&e.code==="rate_limited"?"Too many requests right now. Please wait a moment and try again.":e&&e.code==="unavailable"?"The estimator is only available when this page is opened on claude.ai.":"Something went wrong while estimating. Please try again.";
+    app.innerHTML=back+'<div class="needbox"><h2>Could not calculate</h2><p style="color:var(--red)">'+msg+'</p><button class="go" data-again="1">Try again</button></div>';
+  });
+}
+function showR(r){
+  var back='<button class="back" data-go="#/calc">← Edit meals</button>',items=r.items;
+  var kc=sumR(items,function(i){return i.kcal}),mid=(kc[0]+kc[1])/2,low=[],ok=[];
+  DV.forEach(function(d,n){
+    var tot=sumR(items,function(i){return n<4?i[d[0]]:(i.micro||{})[d[0]]}),m=(tot[0]+tot[1])/2,pc=m/d[2]*100;
+    (pc<100?low:ok).push([d,tot,m,pc]);
+  });
+  low.sort(function(a,b){return a[3]-b[3]});
+  function rowH(x,red){var d=x[0];
+    return '<div class="nrow '+(red?'red':'ok')+'"><div class="nt"><b>'+d[0]+'</b><span>'+rng(x[1])+' / '+d[2]+' '+d[1]+'</span></div><div class="bar"><i style="width:'+Math.min(100,x[3])+'%"></i></div>'+
+      (red?'<small>You need about '+fmt(d[2]-x[2])+' '+d[1]+' more. Try: '+topFoods(d[0])+'.</small>':'')+'</div>';
+  }
+  var perH=MEAL.map(function(m){var k=sumR(items.filter(function(i){return i.meal===m[0]}),function(i){return i.kcal});return '<span class="chip">'+m[2]+' '+m[1]+' <b>'+rng(k)+' kcal</b></span>'}).join("");
+  var seen=items.map(function(i){return '<div class="entry"><span class="en"><b>'+esc(i.food||"Food")+'</b><small>'+esc(i.assumed||"")+'</small></span><b>'+rng(i.kcal||[0,0])+' kcal</b></div>'}).join("");
+  var s=sumR(items,function(i){return i.Sugar});
+  app.innerHTML=back+
+    '<section class="hero col" style="--c:var(--brand)"><div><div class="kcal">'+rng(kc)+' kcal</div><p>Estimated total, about '+Math.round(mid/20)+'% of a 2,000 kcal day</p></div></section>'+
+    '<div class="chips" style="margin-top:14px">'+perH+'</div>'+
+    '<section class="card"><h2>What we understood</h2>'+seen+(r.notes?'<p class="note">'+esc(r.notes)+'</p>':'')+'</section>'+
+    '<section class="card"><h2>What you ate</h2><div class="stats">'+["Protein","Carbs","Fat"].map(function(n){return '<div class="stat"><b>'+rng(sumR(items,function(i){return i[n]}))+'g</b><small>'+n+'</small></div>'}).join("")+'</div>'+
+    '<div class="chips"><span class="chip">Fiber <b>'+rng(sumR(items,function(i){return i.Fiber}))+' g</b></span><span class="chip">Sugar <b>'+rng(s)+' g</b></span></div></section>'+
+    (low.length?'<section class="needbox"><h2>⚠️ You still need ('+low.length+')</h2><p class="sub" style="color:var(--red)">These essential nutrients are below your daily need. Eat more of them.</p>'+low.map(function(x){return rowH(x,true)}).join("")+'</section>':'')+
+    (ok.length?'<section class="card okbox"><h2>✅ Daily need reached ('+ok.length+')</h2>'+ok.map(function(x){return rowH(x,false)}).join("")+'</section>':'')+
+    '<p class="note">These are AI estimates. When amounts are unknown, a typical portion is assumed and shown as a range. Daily needs are for a typical adult. This is general information, not medical advice.</p>';
+  window.scrollTo(0,0);
+}
+
+function route(){
+  var p=location.hash.replace(/^#\/?/,"").split("/");
+  if(p[0]==="item")detail(p[1],+p[2]);
+  else if(p[0]==="cat"&&DATA[p[1]])category(p[1]);
+  else if(p[0]==="calc")calc();
+  else if(p[0]==="results")results();
+  else{home();window.scrollTo(0,0)}
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-go]");
+  if(b)location.hash=b.getAttribute("data-go");
+  if(e.target.closest("[data-again]"))results();
+});
+window.addEventListener("hashchange",route);
+route();
+</script>
+</body>
+</html>
