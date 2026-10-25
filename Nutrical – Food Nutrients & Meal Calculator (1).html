@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nutrical – Food Nutrients & Meal Calculator</title>
+<!-- Search engine meta data -->
+<meta name="description" content="Calories, protein, carbs, fat, vitamins and minerals for 700+ foods per serving, plus a daily meal calculator that shows what you are missing.">
+<meta name="keywords" content="nutrition, calories, food calories, nutrients, vitamins, minerals, protein, carbs, calorie calculator, meal calculator, healthy eating, Pakistani food, Indian food, fast food calories">
+<meta name="author" content="Nutrical">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="application-name" content="Nutrical">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f8f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1913" media="(prefers-color-scheme: dark)">
+<meta name="format-detection" content="telephone=no">
+<!-- Social sharing (Open Graph and Twitter) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nutrical">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Nutrical – Food Nutrients & Meal Calculator">
+<meta property="og:description" content="Calories, protein, carbs, fat, vitamins and minerals for 700+ foods per serving, plus a daily meal calculator that shows what you are missing.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nutrical – Food Nutrients & Meal Calculator">
+<meta name="twitter:description" content="Calories, protein, carbs, fat, vitamins and minerals for 700+ foods per serving, plus a daily meal calculator that shows what you are missing.">
+<!-- Structured data for search engines -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Nutrical","description":"Calories, protein, carbs, fat, vitamins and minerals for 700+ foods per serving, plus a daily meal calculator that shows what you are missing.","applicationCategory":"HealthApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Calories and nutrients per serving for 700+ foods","Fruits, vegetables, drinks, desserts, Western and Eastern food","Breakfast, lunch and dinner calculator","Warnings for missing and excessive nutrients"]}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f8f1;--ink:#13271b;--mute:#54695a;--card:#fff;--line:#d9e6d6;--brand:#1f7a4d;--fruit:#e0446a;--veg:#2f9e55;--base:#e8a317;--drink:#2a8bd6;--sweet:#a24fc4;--west:#d6542b;--east:#12a0a0;--red:#d62839;--redbg:#fdecee;--ok:#1f8a4c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1913;--ink:#eaf3ea;--mute:#a0b3a5;--card:#18251d;--line:#29392f;--red:#ff6b78;--redbg:#3a1a1e;--ok:#5fd18a}}
+:root[data-theme="dark"]{--bg:#0f1913;--ink:#eaf3ea;--mute:#a0b3a5;--card:#18251d;--line:#29392f;--red:#ff6b78;--redbg:#3a1a1e;--ok:#5fd18a}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav div{max-width:820px;margin:0 auto;padding:10px 18px;display:flex;justify-content:space-between;align-items:center}
+.brand,.pill{font:inherit;border:0;cursor:pointer;color:var(--ink);background:none}
+.brand{font-weight:800;font-size:1.35rem;letter-spacing:-.02em;padding:0}
+.brand span{color:var(--brand)}
+.pill{background:var(--brand);color:#fff;font-weight:600;padding:8px 16px;border-radius:999px}
+main{max-width:820px;margin:0 auto;padding:20px 18px 56px}
+h1,h2,h3{letter-spacing:-.02em;line-height:1.1}
+h1{font-size:clamp(2rem,7vw,3rem);font-weight:800;margin:0 0 10px}
+h2{font-size:1.5rem;margin:0 0 12px}
+.sub{color:var(--mute);margin:0 0 16px}
+.hero{border-radius:28px;padding:30px 22px;color:#fff;background:radial-gradient(circle at 88% 8%,rgba(255,255,255,.28),transparent 42%),linear-gradient(135deg,#0f4a31,#1f7a4d 55%,#52b96d)}
+.hero.col{display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:var(--c);background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 65%,#000))}
+.hero h1{margin:0}.hero p{margin:6px 0 0;opacity:.95}
+.hero .big{font-size:4.2rem;line-height:1}
+.kick{display:inline-block;font-weight:600;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:999px;margin-bottom:12px}
+.hero>p{max-width:520px;margin:0 0 18px;font-size:1.08rem}
+.kcal{font-size:2.6rem;font-weight:800;line-height:1}
+.search{width:100%;font:inherit;font-size:1.05rem;padding:15px 18px;border:2px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink)}
+.hero .search{background:#fff;color:#13271b;border:0;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.search:focus-visible,.tile:focus-visible,.item:focus-visible,.back:focus-visible,.go:focus-visible,.chip:focus-visible,.qb:focus-visible,.pill:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.sec{margin-top:36px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.info{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
+.info .ic{font-size:1.9rem}.info h3{margin:6px 0 4px;font-size:1.15rem}.info p{margin:0;color:var(--mute)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:12px}
+.tile{aspect-ratio:1;border:0;border-radius:24px;color:#fff;font:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:transform .15s;background:var(--c);background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 62%,#000));box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.tile span{font-size:clamp(2.2rem,11vw,3.4rem);line-height:1}.tile b{font-size:clamp(.95rem,3.6vw,1.3rem)}.tile small{opacity:.9}
+.tile:active{transform:scale(.96)}
+.t-fruits{--c:var(--fruit)}.t-veg{--c:var(--veg)}.t-base{--c:var(--base)}
+.cta{margin-top:40px;border-radius:28px;padding:34px 22px;text-align:center;color:#2a1d00;background:linear-gradient(135deg,#f2b632,#f7d774)}
+.cta h2{margin:0 0 6px}.cta p{margin:0 0 18px}
+.go{font:inherit;font-weight:800;font-size:1.2rem;padding:16px 32px;border:0;border-radius:999px;background:#13271b;color:#fff;cursor:pointer}
+.go.wide{display:block;width:100%;margin-top:20px;background:var(--brand)}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
+.item{display:flex;align-items:center;gap:10px;text-align:left;font:inherit;padding:12px;border-radius:16px;background:var(--card);border:1px solid var(--line);color:var(--ink);cursor:pointer;border-left:6px solid var(--c)}
+.item .e{font-size:1.7rem}.item b{display:block;font-weight:600;line-height:1.2}.item small{color:var(--mute)}
+.empty{color:var(--mute);padding:16px;border:1px dashed var(--line);border-radius:14px}
+.back{font:inherit;font-weight:600;background:none;border:2px solid var(--line);color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stat{background:var(--bg);border-radius:14px;padding:12px;text-align:center}.stat b{display:block;font-size:1.4rem}.stat small{color:var(--mute)}
+.row{display:grid;grid-template-columns:78px 1fr 64px;gap:10px;align-items:center;padding:6px 0}.row b{text-align:right}
+.bar{height:10px;border-radius:6px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;background:var(--c,var(--brand));border-radius:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;color:var(--ink);padding:7px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:.95rem}
+button.chip{cursor:pointer}
+.note{color:var(--mute);font-size:.85rem;margin-top:18px}
+.meal{border-top:6px solid var(--c)}.meal h2{margin-bottom:8px}
+.entry{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.entry .e{font-size:1.5rem}.en{flex:1;min-width:0}.en b{display:block;font-weight:600;line-height:1.2}.en small{color:var(--mute)}
+.qb{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:1.1rem;cursor:pointer}
+.sug{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.meal .search{margin-top:12px}
+.nrow{padding:10px 0;border-bottom:1px solid var(--line)}
+.nt{display:flex;justify-content:space-between;gap:10px;margin-bottom:5px}.nt span{color:var(--mute)}
+.nrow small{display:block;margin-top:5px}
+.nrow.red b,.nrow.red .nt span,.nrow.red small{color:var(--red)}.nrow.red .bar i{background:var(--red)}
+.nrow.ok .bar i{background:var(--ok)}
+.needbox{background:var(--redbg);border:2px solid var(--red);border-radius:20px;padding:18px;margin-top:16px}
+.needbox h2{color:var(--red)}
+.okbox h2{color:var(--ok)}
+.ta{margin-top:0!important;resize:vertical;min-height:88px;font-family:inherit}
+</style>
+</head>
+<body>
+<noscript>Nutrical needs JavaScript to show food nutrition data and the meal calculator. Please turn JavaScript on.</noscript>
+<header class="nav"><div><button class="brand" data-go="#/">🥗 Nutri<span>cal</span></button><button class="pill" data-go="#/calc">Calculator</button></div></header>
+<main id="app"></main>
+<script>
+var DATA={
+fruits:{label:"Fruits",emoji:"🍎",color:"var(--fruit)",items:[
+["Apple","🍎",52,.3,13.8,.2,2.4,10.4,[["Vitamin C","4.6 mg"],["Potassium","107 mg"],["Vitamin K","2.2 µg"]]],
+["Banana","🍌",89,1.1,22.8,.3,2.6,12.2,[["Potassium","358 mg"],["Vitamin B6","0.4 mg"],["Vitamin C","8.7 mg"],["Magnesium","27 mg"]]],
+["Orange","🍊",47,.9,11.8,.1,2.4,9.4,[["Vitamin C","53 mg"],["Folate","30 µg"],["Potassium","181 mg"],["Calcium","40 mg"]]],
+["Mango","🥭",60,.8,15,.4,1.6,13.7,[["Vitamin C","36 mg"],["Vitamin A","54 µg"],["Folate","43 µg"]]],
+["Strawberry","🍓",32,.7,7.7,.3,2,4.9,[["Vitamin C","59 mg"],["Manganese","0.4 mg"],["Folate","24 µg"]]],
+["Grapes","🍇",69,.7,18.1,.2,.9,15.5,[["Vitamin K","14.6 µg"],["Vitamin C","3.2 mg"],["Potassium","191 mg"]]],
+["Watermelon","🍉",30,.6,7.6,.2,.4,6.2,[["Vitamin C","8.1 mg"],["Vitamin A","28 µg"],["Potassium","112 mg"]]],
+["Pineapple","🍍",50,.5,13.1,.1,1.4,9.9,[["Vitamin C","47.8 mg"],["Manganese","0.9 mg"],["Vitamin B6","0.1 mg"]]],
+["Papaya","🍈",43,.5,10.8,.3,1.7,7.8,[["Vitamin C","61.8 mg"],["Vitamin A","47 µg"],["Folate","37 µg"]]],
+["Pear","🍐",57,.4,15.2,.1,3.1,9.8,[["Vitamin C","4.3 mg"],["Vitamin K","4.4 µg"],["Potassium","116 mg"]]],
+["Pomegranate","🔴",83,1.7,18.7,1.2,4,13.7,[["Vitamin K","16.4 µg"],["Vitamin C","10.2 mg"],["Folate","38 µg"],["Potassium","236 mg"]]],
+["Avocado","🥑",160,2,8.5,14.7,6.7,.7,[["Vitamin K","21 µg"],["Folate","81 µg"],["Potassium","485 mg"],["Vitamin E","2.1 mg"]]],
+["Peach","🍑",39,.9,9.5,.3,1.5,8.4,"vc6.6;va16;pot190",150,"1 medium"],
+["Plum","🟣",46,.7,11.4,.3,1.4,9.9,"vc9.5;vk6.4;pot157",66,"1 medium"],
+["Cherries","🍒",63,1.1,16,.2,2.1,12.8,"vc7;pot222;mn.1",140,"1 cup"],
+["Blueberries","🫐",57,.7,14.5,.3,2.4,10,"vk19.3;vc9.7;mn.3",148,"1 cup"],
+["Raspberries","🔴",52,1.2,11.9,.7,6.5,4.4,"vc26.2;mn.7;vk7.8",123,"1 cup"],
+["Blackberries","⚫",43,1.4,9.6,.5,5.3,4.9,"vc21;vk19.8;mn.6",144,"1 cup"],
+["Kiwi","🥝",61,1.1,14.7,.5,3,9,"vc92.7;vk40;pot312",69,"1 medium"],
+["Lemon","🍋",29,1.1,9.3,.3,2.8,2.5,"vc53;pot138;ca26",58,"1 fruit"],
+["Lime","🟢",30,.7,10.5,.2,2.8,1.7,"vc29.1;ca33;pot102",67,"1 fruit"],
+["Grapefruit","🍊",42,.8,10.7,.1,1.6,6.9,"vc31.2;va46;pot135",123,"½ fruit"],
+["Apricot","🍑",48,1.4,11.1,.4,2,9.2,"va96;vc10;pot259",35,"1 fruit"],
+["Fig","🟣",74,.8,19.2,.3,2.9,16.3,"pot232;ca35;vk4.7",50,"1 medium"],
+["Cantaloupe","🍈",34,.8,8.2,.2,.9,7.9,"vc36.7;va169;pot267",160,"1 cup cubes"],
+["Honeydew melon","🍈",36,.5,9.1,.1,.8,8.1,"vc18;pot228;fol19",170,"1 cup cubes"],
+["Coconut meat","🥥",354,3.3,15.2,33.5,9,6.2,"mn1.5;se10.1;fe2.4",45,"1 piece"],
+["Guava","🍐",68,2.6,14.3,1,5.4,8.9,"vc228;fol49;pot417",55,"1 fruit"],
+["Dates","🌴",277,1.8,75,.2,6.7,66.5,"pot696;mg54;mn.3",24,"1 Medjool date"],
+["Passion fruit","🟡",97,2.2,23.4,.7,10.4,11.2,"vc30;va64;pot348",18,"1 fruit"],
+["Lychee","🍒",66,.8,16.5,.4,1.3,15.2,"vc71.5;pot171;fol14",10,"1 fruit"],
+["Cranberries","🔴",46,.4,12.2,.1,4.6,4,"vc13.3;vk5;mn.4",110,"1 cup"],
+["Tangerine","🍊",53,.8,13.3,.3,1.8,10.6,"vc26.7;va34;fol16",88,"1 medium"],
+["Nectarine","🍑",44,1.1,10.6,.3,1.7,7.9,"vc5.4;va17;pot201",142,"1 medium"],
+["Persimmon","🟠",70,.6,18.6,.2,3.6,12.5,"va81;vc7.5;mn.4",168,"1 fruit"],
+["Jackfruit","🍈",95,1.7,23.3,.6,1.5,19.1,"vc13.7;pot448;mg29",165,"1 cup"],
+["Starfruit","⭐",31,1,6.7,.3,2.8,4,"vc34.4;pot133;fol12",91,"1 fruit"],
+["Dragon fruit","🐉",60,1.2,13,0,3,8,"vc3;mg36;fe.7",100,"1 cup"],
+["Mulberries","🫐",43,1.4,9.8,.4,1.7,8.1,"vc36;fe1.9;vk7.8",140,"1 cup"],
+["Black currants","🫐",63,1.4,15.4,.4,0,0,"vc181;pot322;fe1.5",112,"1 cup"],
+["Gooseberries","🟢",44,.9,10,.6,4.3,0,"vc28;pot198;mn.1",150,"1 cup"],
+["Rambutan","🔴",82,.9,20,.2,.9,0,"vc5;fe.4;pot42",100,"5 fruits"],
+["Longan","🟡",60,1.3,15,.1,1.1,0,"vc84;pot266",100,"10 fruits"],
+["Soursop","🟢",66,1,16.8,.3,3.3,13.5,"vc21;pot278;mg21",100,"½ cup"],
+["Tamarind","🟤",239,2.8,62.5,.6,5.1,57,"pot628;mg92;fe2.8",25,"1 oz"],
+["Clementine","🍊",47,.9,12,.2,1.7,9.2,"vc49;fol24;pot177",74,"1 fruit"],
+["Raisins","🍇",299,3.1,79,.5,3.7,59,"pot749;fe1.9;mn.3",36,"1 small box"],
+["Prunes","🟣",240,2.2,64,.4,7.1,38,"vk60;pot732;mn.3",42,"5 prunes"],
+["Plantain","🍌",122,1.3,32,.4,2.3,15,"vc18;pot499;mg37",148,"1 cup sliced"],
+["Jamun (Java plum)","🟣",62,.7,14,.2,.6,10,"vc18;pot79;fe.2",100,"½ cup"],
+["Loquat","🍑",47,.4,12,.2,1.7,8,"va76;pot266;vc1",100,"5 fruits"],
+["Chikoo (sapodilla)","🟤",83,.4,20,1.1,5.3,14,"vc14;pot193;ca21",170,"1 fruit"],
+["Custard apple (sharifa)","🟢",94,2.1,23.6,.3,4.4,19,"vc19;pot382;bx.2",100,"½ fruit"],
+["Kinnow (mandarin)","🍊",53,.8,13.3,.3,1.8,10.6,"vc27;fol16;va34",90,"1 fruit"],
+["Ber (Indian jujube)","🟠",74,.8,17,.1,.6,10,"vc70;pot200",100,"½ cup"]
+]},
+veg:{label:"Vegetables",emoji:"🥦",color:"var(--veg)",items:[
+["Carrot","🥕",41,.9,9.6,.2,2.8,4.7,[["Vitamin A","835 µg"],["Vitamin K","13.2 µg"],["Potassium","320 mg"]]],
+["Spinach","🥬",23,2.9,3.6,.4,2.2,.4,[["Vitamin K","483 µg"],["Vitamin A","469 µg"],["Folate","194 µg"],["Iron","2.7 mg"]]],
+["Broccoli","🥦",34,2.8,6.6,.4,2.6,1.7,[["Vitamin C","89 mg"],["Vitamin K","102 µg"],["Folate","63 µg"]]],
+["Tomato","🍅",18,.9,3.9,.2,1.2,2.6,[["Vitamin C","13.7 mg"],["Potassium","237 mg"],["Vitamin K","7.9 µg"]]],
+["Potato","🥔",77,2,17.5,.1,2.2,.8,[["Potassium","421 mg"],["Vitamin C","19.7 mg"],["Vitamin B6","0.3 mg"]]],
+["Onion","🧅",40,1.1,9.3,.1,1.7,4.2,[["Vitamin C","7.4 mg"],["Potassium","146 mg"],["Folate","19 µg"]]],
+["Cucumber","🥒",15,.7,3.6,.1,.5,1.7,[["Vitamin K","16.4 µg"],["Potassium","147 mg"],["Vitamin C","2.8 mg"]]],
+["Cauliflower","🥬",25,1.9,5,.3,2,1.9,[["Vitamin C","48.2 mg"],["Vitamin K","15.5 µg"],["Folate","57 µg"]]],
+["Sweet potato","🍠",86,1.6,20.1,.1,3,4.2,[["Vitamin A","709 µg"],["Potassium","337 mg"],["Vitamin C","2.4 mg"]]],
+["Red bell pepper","🫑",31,1,6,.3,2.1,4.2,[["Vitamin C","128 mg"],["Vitamin A","157 µg"],["Vitamin B6","0.3 mg"]]],
+["Cabbage","🥬",25,1.3,5.8,.1,2.5,3.2,[["Vitamin C","36.6 mg"],["Vitamin K","76 µg"],["Folate","43 µg"]]],
+["Green peas","🫛",81,5.4,14.5,.4,5.7,5.7,[["Vitamin C","40 mg"],["Vitamin K","24.8 µg"],["Folate","65 µg"],["Iron","1.5 mg"]]],
+["Lettuce","🥬",15,1.4,2.9,.2,1.3,.8,"vk126;va370;fol38",36,"1 cup shredded"],
+["Kale","🥬",49,4.3,8.8,.9,3.6,2.3,"vk705;vc120;va500",67,"1 cup chopped"],
+["Zucchini","🥒",17,1.2,3.1,.3,1,2.5,"vc17.9;pot261;bx.2",196,"1 medium"],
+["Eggplant","🍆",25,1,5.9,.2,3,3.5,"mn.2;pot229;vk3.5",82,"1 cup cubes"],
+["Mushroom","🍄",22,3.1,3.3,.3,1,2,"ni3.6;pot318;se9.3",70,"1 cup sliced"],
+["Garlic","🧄",149,6.4,33,.5,2.1,1,"vc31.2;mn1.7;bx1.2",3,"1 clove"],
+["Ginger","🫚",80,1.8,17.8,.8,2,1.7,"pot415;mg43",6,"1 tbsp"],
+["Beetroot","🟣",43,1.6,9.6,.2,2.8,6.8,"fol109;mn.3;pot325",82,"1 medium"],
+["Radish","🔴",16,.7,3.4,.1,1.6,1.9,"vc14.8;fol25;pot233",116,"1 cup sliced"],
+["Celery","🥬",16,.7,3,.2,1.6,1.3,"vk29.3;pot260;fol36",40,"1 stalk"],
+["Asparagus","🌿",20,2.2,3.9,.1,2.1,1.9,"vk41.6;fol52;vc5.6",134,"1 cup"],
+["Green beans","🫛",31,1.8,7,.2,2.7,3.3,"vk43;vc12.2;fol33",110,"1 cup"],
+["Sweet corn","🌽",86,3.3,19,1.4,2,6.3,"fol42;mg37;pot270",90,"½ cup kernels"],
+["Pumpkin","🎃",26,1,6.5,.1,.5,2.8,"va426;vc9;pot340",116,"1 cup cubes"],
+["Butternut squash","🎃",45,1,11.7,.1,2,2.2,"va532;vc21;pot352",140,"1 cup cubes"],
+["Brussels sprouts","🥬",43,3.4,9,.3,3.8,2.2,"vk177;vc85;fol61",88,"1 cup"],
+["Leek","🌿",61,1.5,14.2,.3,1.8,3.9,"vk47;va83;mn.5",89,"1 medium"],
+["Okra","🌿",33,1.9,7.5,.2,3.2,1.5,"vc23;vk31;fol60",100,"1 cup"],
+["Turnip","⚪",28,.9,6.4,.1,1.8,3.8,"vc21;pot191;ca30",130,"1 cup cubes"],
+["Spring onion","🌱",32,1.8,7.3,.2,2.6,2.3,"vk207;vc18.8;va50",50,"½ cup chopped"],
+["Bok choy","🥬",13,1.5,2.2,.2,1,1.2,"vc45;va223;vk45.5",70,"1 cup shredded"],
+["Artichoke","🌿",47,3.3,10.5,.2,5.4,1,"fol68;vk14.8;mg60",120,"1 medium"],
+["Chili pepper","🌶️",40,1.9,8.8,.4,1.5,5.3,"vc144;va48;bx.5",45,"1 pepper"],
+["Green bell pepper","🫑",20,.9,4.6,.2,1.7,2.4,"vc80.4;vk7.4;bx.2",119,"1 medium"],
+["Yam","🍠",118,1.5,27.9,.2,4.1,.5,"pot816;mn.4;vc17.1",136,"1 cup cubes"],
+["Cassava","🥔",160,1.4,38,.3,1.8,1.7,"vc20.6;pot271;fol27",100,"½ cup"],
+["Edamame","🫛",121,11.9,8.9,5.2,5.2,2.2,"fol311;vk26.7;fe2.3",78,"½ cup shelled"],
+["Fennel","🌿",31,1.2,7.3,.2,3.1,3.9,"vc12;pot414;mn.2",87,"1 cup sliced"],
+["Collard greens","🥬",32,3,5.4,.6,4,.5,"vk437;va251;vc35.3",36,"1 cup chopped"],
+["Swiss chard","🥬",19,1.8,3.7,.2,1.6,1.1,"vk830;va306;vc30",36,"1 cup chopped"],
+["Arugula","🌱",25,2.6,3.7,.7,1.6,2.1,"vk109;va119;fol97",20,"1 cup"],
+["Parsnip","🥕",75,1.2,18,.3,4.9,4.8,"vc17;fol67;pot375",133,"1 cup sliced"],
+["Bitter gourd","🥒",17,1,3.7,.2,2.8,1,"vc84;fol72;va6",94,"1 cup sliced"],
+["Water chestnut","⚪",97,1.4,23.9,.1,3,4.8,"pot584;mn.3;bx.3",62,"½ cup sliced"],
+["Lotus root","🌸",74,2.6,17,.1,4.9,.5,"vc44;pot556;bx.3",60,"½ cup"],
+["Daikon radish","⚪",18,.6,4.1,.1,1.6,2.5,"vc22;pot227;fol28",116,"1 cup sliced"],
+["Napa cabbage","🥬",16,1.2,3.2,.2,1.2,1.4,"vk43;vc27;fol79",76,"1 cup shredded"],
+["Bean sprouts","🌱",30,3,6,.2,1.8,4,"vk33;vc13;fol61",104,"1 cup"],
+["Bamboo shoots","🎋",27,2.6,5.2,.3,2.2,3,"pot533;mn.3",120,"1 cup sliced"],
+["Chayote","🥒",19,.8,4.5,.1,1.7,1.7,"vc8;fol93;mn.2",132,"1 cup"],
+["Taro","🍠",112,1.5,26.5,.2,4.1,.4,"pot484;mn.4;bx.3",132,"1 cup"],
+["Kohlrabi","🥬",27,1.7,6.2,.1,3.6,2.6,"vc62;pot350;bx.2",135,"1 cup"],
+["Rutabaga","🥔",38,1.1,8.6,.2,2.3,4.5,"vc25;pot305;ca43",140,"1 cup cubes"],
+["Watercress","🌿",11,2.3,1.3,.1,.5,.2,"vk250;vc43;ca120",34,"1 cup"],
+["Radicchio","🥬",23,1.4,4.5,.3,.9,.6,"vk255;pot302;mn.3",40,"1 cup shredded"],
+["Sauerkraut","🥬",19,.9,4.3,.1,2.9,1.8,"vc15;vk13;fe1.5",70,"½ cup"],
+["Jicama","⚪",38,.7,8.8,.1,4.9,1.8,"vc20;pot150;fol12",130,"1 cup"],
+["Mustard greens","🥬",27,2.9,4.7,.4,3.2,1.3,"vk257;vc70;va525",56,"1 cup chopped"],
+["Dandelion greens","🌼",45,2.7,9.2,.7,3.5,.7,"vk778;va508;ca187",55,"1 cup chopped"],
+["Bottle gourd (lauki)","🥒",14,.6,3.4,.1,.5,1.7,"vc10;pot150;mg11",116,"1 cup"],
+["Ridge gourd (tori)","🥒",20,.5,4.4,.1,1,1.8,"vc12;pot139;mg14",100,"1 cup sliced"],
+["Tinda (apple gourd)","🟢",21,1.4,3.4,.4,1.1,1.5,"vc18;ca25;fe.8",100,"½ cup"],
+["Fenugreek leaves (methi)","🌿",49,4.4,6,.9,1.1,0,"fe2;ca200;vc40",30,"½ cup"],
+["Coriander leaves (dhania)","🌿",23,2.1,3.7,.5,2.8,.9,"vk310;vc27;va337",16,"¼ cup"],
+["Mint leaves (pudina)","🌿",44,3.3,8.4,.7,6.8,0,"va212;fe5;vc31",12,"2 tbsp"]
+]},
+base:{label:"Basic foods",emoji:"🍚",color:"var(--base)",items:[
+["White rice (cooked)","🍚",130,2.7,28.2,.3,.4,.1,[["Manganese","0.5 mg"],["Selenium","7.5 µg"]]],
+["White bread","🍞",265,9,49,3.2,2.7,5.7,[["Iron","3.6 mg"],["Calcium","144 mg"],["Folate","111 µg"],["Sodium","491 mg"]]],
+["Egg (boiled)","🥚",155,12.6,1.1,10.6,0,1.1,[["Vitamin B12","1.1 µg"],["Vitamin D","2.2 µg"],["Choline","294 mg"],["Selenium","30.8 µg"]]],
+["Whole milk","🥛",61,3.2,4.8,3.3,0,5.1,[["Calcium","113 mg"],["Vitamin B12","0.5 µg"],["Potassium","132 mg"],["Vitamin D","1.3 µg"]]],
+["Chicken breast (cooked)","🍗",165,31,0,3.6,0,0,[["Niacin","13.7 mg"],["Vitamin B6","0.6 mg"],["Phosphorus","228 mg"],["Selenium","27.6 µg"]]],
+["Lentils (cooked)","🫘",116,9,20.1,.4,7.9,1.8,[["Folate","181 µg"],["Iron","3.3 mg"],["Potassium","369 mg"]]],
+["Chickpeas (cooked)","🫘",164,8.9,27.4,2.6,7.6,4.8,[["Folate","172 µg"],["Iron","2.9 mg"],["Manganese","1 mg"]]],
+["Oats (dry)","🥣",389,16.9,66.3,6.9,10.6,0,[["Manganese","4.9 mg"],["Phosphorus","523 mg"],["Iron","4.7 mg"],["Magnesium","177 mg"]]],
+["Pasta (cooked)","🍝",158,5.8,30.9,.9,1.8,.6,[["Manganese","0.4 mg"],["Iron","1.3 mg"]]],
+["Cheddar cheese","🧀",403,24.9,1.3,33.1,0,.5,[["Calcium","721 mg"],["Phosphorus","512 mg"],["Vitamin B12","1.1 µg"]]],
+["Almonds","🥜",579,21.2,21.6,49.9,12.5,4.4,[["Vitamin E","25.6 mg"],["Magnesium","270 mg"],["Calcium","269 mg"]]],
+["Salmon (cooked)","🐟",206,22,0,12,0,0,[["Vitamin D","11 µg"],["Vitamin B12","3.2 µg"],["Selenium","36.5 µg"],["Potassium","384 mg"]]],
+["Brown rice (cooked)","🍚",123,2.7,25.6,1,1.6,.2,"mn.9;mg39;ph103",195,"1 cup"],
+["Quinoa (cooked)","🌾",120,4.4,21.3,1.9,2.8,.9,"mn.6;mg64;fol42",185,"1 cup"],
+["Whole wheat bread","🍞",252,12.5,43,3.5,7,6,"fe2.4;mg82;se40",28,"1 slice"],
+["Flour tortilla","🫓",306,8.2,51,8,2.8,2.4,"fe3.5;ca140",45,"1 tortilla"],
+["Corn tortilla","🫓",218,5.7,44.6,2.9,6.3,.6,"ca81;mg54;mn.4",26,"1 tortilla"],
+["Popcorn (air-popped)","🍿",387,13,78,4.5,14.5,.9,"mn1.1;mg144;ph358",24,"3 cups"],
+["Barley (cooked)","🌾",123,2.3,28.2,.4,3.8,.3,"mn.3;ni2.1;mg22",157,"1 cup"],
+["Couscous (cooked)","🍲",112,3.8,23.2,.2,1.4,.1,"se27;ni1;mg8",157,"1 cup"],
+["Whole wheat pasta (cooked)","🍝",124,5.3,26.5,.5,3.9,.6,"mn.9;mg42;fe1.5",140,"1 cup"],
+["Plain yogurt (whole milk)","🥛",61,3.5,4.7,3.3,0,4.7,"ca121;by.5;pot155",245,"1 cup"],
+["Greek yogurt (nonfat)","🥛",59,10.2,3.6,.4,0,3.2,"ca110;by.8;pot141",170,"¾ cup"],
+["Skim milk","🥛",34,3.4,5,.1,0,5.1,"ca122;by.5;pot166",245,"1 cup"],
+["Butter","🧈",717,.9,.1,81,0,.1,"va684;ve2.3;vk7",14,"1 tbsp"],
+["Mozzarella cheese","🧀",280,28,3.1,17,0,1.2,"ca505;ph354;by2.3",28,"1 oz"],
+["Cottage cheese","🧀",98,11.1,3.4,4.3,0,2.7,"ca83;by.4;se9.7",113,"½ cup"],
+["Soy milk","🥛",33,2.9,1.7,1.6,.4,.4,"ca120;pot118;vd1",243,"1 cup"],
+["Almond milk (unsweetened)","🥛",15,.6,.3,1.2,.2,0,"ca120;ve4",240,"1 cup"],
+["Beef (lean, cooked)","🥩",250,26,0,15,0,0,"zn6.3;by2.6;fe2.6",85,"3 oz"],
+["Pork loin (cooked)","🥩",242,27,0,14,0,0,"se40;by.7;zn2.4",85,"3 oz"],
+["Turkey breast (cooked)","🦃",135,30,0,.7,0,0,"ni11;bx.8;se31",85,"3 oz"],
+["Lamb (cooked)","🍖",294,25,0,21,0,0,"by2.6;zn4.6;fe1.9",85,"3 oz"],
+["Chicken thigh (cooked)","🍗",209,26,0,10.9,0,0,"ni6.1;bx.4;se21",85,"3 oz"],
+["Tuna (canned in water)","🐟",116,25.5,0,.8,0,0,"se76;ni10;vd1.7",85,"3 oz"],
+["Shrimp (cooked)","🦐",99,24,.2,.3,0,0,"se38;by1.2;ca64",85,"3 oz"],
+["Cod (cooked)","🐟",105,23,0,.9,0,0,"by1;se37;pot244",85,"3 oz"],
+["Sardines (canned)","🐟",208,24.6,0,11.5,0,0,"ca382;vd4.8;by8.9",92,"1 can"],
+["Tilapia (cooked)","🐟",128,26,0,2.7,0,0,"se54;by1.6;ni4.7",85,"3 oz"],
+["Black beans (cooked)","🫘",132,8.9,23.7,.5,8.7,.3,"fol149;mn.4;fe2.1",172,"1 cup"],
+["Kidney beans (cooked)","🫘",127,8.7,22.8,.5,6.4,.3,"fol130;fe2.9;pot403",177,"1 cup"],
+["Tofu (firm)","🟨",144,17.3,2.8,8.7,2.3,.6,"ca350;fe2.7;mn1.2",126,"½ cup"],
+["Hummus","🥣",166,7.9,14.3,9.6,6,.3,"fe2.4;mg71;ca38",30,"2 tbsp"],
+["Peanut butter","🥜",588,25,20,50,6,9,"ni13.1;mg168;ve9",32,"2 tbsp"],
+["Peanuts","🥜",567,25.8,16.1,49.2,8.5,4.7,"ni12;mg168;fol240",28,"1 oz"],
+["Walnuts","🌰",654,15.2,13.7,65.2,6.7,2.6,"mn3.4;mg158;ph346",28,"1 oz"],
+["Cashews","🥜",553,18.2,30.2,43.9,3.3,5.9,"mg292;zn5.8;mn1.7",28,"1 oz"],
+["Chia seeds","🌱",486,16.5,42.1,30.7,34.4,0,"ca631;mg335;ph860",28,"2 tbsp"],
+["Flaxseed","🌱",534,18.3,28.9,42.2,27.3,1.6,"mg392;mn2.5;ph642",10,"1 tbsp"],
+["Sunflower seeds","🌻",584,20.8,20,51.5,8.6,2.6,"ve35;mg325;se53",28,"1 oz"],
+["Pumpkin seeds","🎃",559,30.2,10.7,49,6,1.4,"mg592;zn7.8;mn4.5",28,"1 oz"],
+["Olive oil","🫒",884,0,0,100,0,0,"ve14;vk60",13.5,"1 tbsp"],
+["Honey","🍯",304,.3,82.4,0,.2,82.1,"pot52;ca6",21,"1 tbsp"],
+["Dark chocolate (70–85%)","🍫",598,7.8,45.9,42.6,10.9,24,"fe11.9;mg228;mn1.9",28,"1 oz"],
+["Sourdough bread","🍞",270,10,52,2,2.4,2,"fe3;fol107;se30",50,"1 slice"],
+["Rye bread","🍞",259,8.5,48,3.3,5.8,3.9,"fe2.8;se40;mn1.2",32,"1 slice"],
+["Bulgur (cooked)","🌾",83,3.1,18.6,.2,4.5,.1,"mn.6;mg32;fe1",182,"1 cup"],
+["Buckwheat (cooked)","🌾",92,3.4,19.9,.6,2.7,.9,"mg51;mn.4;ph70",168,"1 cup"],
+["Egg white","🥚",52,10.9,.7,.2,0,.7,"se20;ni.1;pot163",33,"1 large"],
+["Parmesan cheese","🧀",431,38,4.1,29,0,.9,"ca1184;ph694;by1.2",28,"1 oz"],
+["Feta cheese","🧀",264,14,4,21,0,4,"ca493;by1.7;ph337",28,"1 oz"],
+["Ricotta cheese","🧀",174,11.3,3,13,0,.3,"ca207;ph158;by.3",124,"½ cup"],
+["Pistachios","🥜",560,20,28,45,10,8,"bx1.7;pot1025;ph490",28,"1 oz"],
+["Hazelnuts","🌰",628,15,17,61,10,4.3,"ve15;mn6.2;mg163",28,"1 oz"],
+["Soybeans (cooked)","🫘",173,17,10,9,6,3,"fol54;fe5;mg86",172,"1 cup"],
+["Tempeh","🟨",192,20,7.6,11,0,0,"mn1.3;mg81;ph266",83,"½ cup"],
+["Ham","🥓",145,21,1.5,5.5,0,0,"se36;ni4;by.7",85,"3 oz"],
+["Crab (cooked)","🦀",97,19,0,1.5,0,0,"by9.8;zn4;se40",85,"3 oz"],
+["Oysters","🦪",68,7,3.9,2.5,0,0,"zn16;by16",84,"6 oysters"],
+["Mackerel (cooked)","🐟",262,24,0,18,0,0,"by19;vd16;ni9",85,"3 oz"],
+["Whole wheat flour (atta)","🌾",340,13.2,72,2.5,10.7,.4,"mn4;mg137;fe3.6",30,"¼ cup"],
+["Basmati rice (cooked)","🍚",121,3.5,25,.4,.4,0,"mn.5;fe.4",195,"1 cup"],
+["Besan (chickpea flour)","🌾",387,22,58,6.7,11,10,"fol437;fe4.9;mg166",30,"¼ cup"],
+["Ghee","🧈",900,0,0,100,0,0,"va840;ve2.8;vk8.6",13,"1 tbsp"],
+["Vegetable oil","🛢️",884,0,0,100,0,0,"ve14;vk25",13.5,"1 tbsp"],
+["Khoya (mawa)","⚪",421,15,25,28,0,25,"ca480;by1",30,"1 oz"],
+["Rusk","🍞",407,10,74,7,3,8,"fe3;ca40",20,"2 rusks"],
+["Jaggery (gur)","🟤",383,.4,98,.1,0,97,"fe11;mg70;ca80",20,"1 tbsp"],
+["Goat meat (cooked)","🍖",143,27,0,3,0,0,"zn5;fe3;by1",85,"3 oz"],
+["Beef liver (cooked)","🥩",175,27,3.9,4.7,0,0,"va9442;by70;fe6.5",85,"3 oz"],
+["Chicken liver (cooked)","🍗",167,24,.9,6.5,0,0,"va3290;by17;fe11",85,"3 oz"],
+["Rohu fish (cooked)","🐟",120,19,0,4,0,0,"by3;se25;pot280",100,"1 piece"],
+["Pomfret fish (cooked)","🐟",120,20,0,4,0,0,"by2;se30;pot300",100,"1 piece"]
+]},
+drinks:{label:"Drinks",emoji:"🥤",color:"var(--drink)",items:[
+["Orange juice","🧃",45,.7,10.4,.2,.2,8.4,"vc50;pot200;fol30",248,"1 cup"],
+["Apple juice","🧃",46,.1,11.4,.1,.2,9.6,"pot101;vc1",248,"1 cup"],
+["Tomato juice","🍅",17,.8,4.2,.1,.4,3.6,"vc18;pot229;fol20",243,"1 cup"],
+["Carrot juice","🥕",40,.9,9.3,.2,.8,3.9,"va930;pot292;vc8",236,"1 cup"],
+["Fruit smoothie","🥤",60,.8,14,.3,1.2,11,"vc10;pot140",300,"12 oz"],
+["Lemonade","🍋",40,0,10.4,0,.1,9.4,"vc1;pot7",248,"1 cup"],
+["Coconut water","🥥",19,.7,3.7,.2,1.1,2.6,"pot250;mg25;mn.1",240,"1 cup"],
+["Cola","🥤",42,0,10.6,0,0,10.6,"ph10;pot2",355,"1 can"],
+["Sports drink","🥤",26,0,6.2,0,0,5.8,"pot27;ca2",355,"12 oz"],
+["Energy drink","⚡",45,0,11,0,0,11,"ni8;bx2;by2",250,"1 can"],
+["Black coffee","☕",1,.1,0,0,0,0,"pot49;mg3;ni.2",237,"1 cup"],
+["Latte","☕",54,2.8,4.7,2.8,0,4.5,"ca103;by.4;pot140",360,"12 oz"],
+["Cappuccino","☕",45,2.3,3.7,2.3,0,3.5,"ca80;pot120;by.3",180,"1 cup"],
+["Green tea","🍵",1,0,0,0,0,0,"mn.2;pot8",245,"1 cup"],
+["Black tea","🫖",1,0,.3,0,0,0,"pot37;mn.2;mg1",240,"1 cup"],
+["Masala chai","🫖",50,1.5,8,1.5,0,7.5,"ca55;pot80",240,"1 cup"],
+["Iced tea (sweetened)","🧊",30,0,7.5,0,0,7.4,"pot20;mn.1",240,"1 glass"],
+["Hot chocolate","☕",77,3.5,11,2.3,.6,10,"ca110;pot200;mg14",250,"1 cup"],
+["Milkshake (vanilla)","🥛",112,3.5,18.4,3,0,17.7,"ca120;pot180;by.5",300,"1 medium"],
+["Sweet lassi","🥛",80,3,13,2,0,12,"ca100;by.4;pot150",250,"1 glass"],
+["Mango lassi","🥭",90,2.8,16,1.5,.3,15.5,"ca95;vc5;by.4",250,"1 glass"],
+["Beer","🍺",43,.5,3.6,0,0,0,"ni1.6;ph14;pot27",355,"1 can"],
+["Red wine","🍷",85,.1,2.6,0,0,.6,"pot127;mg12;mn.2",150,"5 oz glass"],
+["Grape juice","🍇",60,.4,14.8,.1,.2,14.3,"pot104;mn.3",248,"1 cup"],
+["Pineapple juice","🍍",53,.4,12.9,.1,.2,9.9,"vc9;mn.9;pot130",250,"1 cup"],
+["Cranberry juice cocktail","🧃",46,0,12,0,0,12,"vc23;pot9",253,"1 cup"],
+["Pomegranate juice","🧃",54,.2,13.1,.3,.1,12.7,"pot214;fol17",248,"1 cup"],
+["Grapefruit juice","🧃",39,.5,9.2,.1,.1,8.1,"vc34;pot162;fol10",247,"1 cup"],
+["Lemon juice","🍋",22,.4,6.9,.2,.3,2.5,"vc39;pot103",30,"2 tbsp"],
+["Watermelon juice","🍉",30,.6,7.6,.2,.4,6.2,"vc8;pot112",240,"1 cup"],
+["Sugarcane juice","🥤",54,0,13.4,0,0,13,"pot110;fe.4",240,"1 glass"],
+["Mixed vegetable juice","🥤",21,.8,4.4,.1,.6,3.6,"vc22;va62;pot250",240,"1 cup"],
+["Nimbu pani (lime water)","🍋",30,0,7.5,0,.1,7,"vc8;pot20",240,"1 glass"],
+["Oat milk","🥛",48,1,6.7,1.5,.8,3.4,"ca120;vd1",240,"1 cup"],
+["Chocolate milk","🥛",83,3.2,10.4,3.4,.8,9.5,"ca114;pot198;by.5",250,"1 cup"],
+["Buttermilk","🥛",40,3.3,4.8,.9,0,4.8,"ca116;by.5;pot135",245,"1 cup"],
+["Kefir","🥛",63,3.4,4.8,3.5,0,4.7,"ca120;by.4;pot164",243,"1 cup"],
+["Chaas (salted lassi)","🥛",25,1.7,2.7,.8,0,2.5,"ca60;by.3",250,"1 glass"],
+["Eggnog","🥛",88,4.6,10,4.2,0,10,"ca130;by.5",248,"1 cup"],
+["Bubble tea","🧋",90,1,18,2,.2,15,"ca20;pot60",400,"1 medium"],
+["Matcha latte","🍵",50,2,6,2,.3,5,"ca90;by.3;mn.2",300,"1 cup"],
+["Espresso","☕",9,.1,1.7,.2,0,0,"pot115;mg8;ni.5",30,"1 shot"],
+["Iced coffee (sweetened)","🧊",40,.8,8,.6,0,7.5,"ca20;pot80",250,"1 glass"],
+["Mocha","☕",70,3,9,2.5,.5,8,"ca100;pot200;mg20",360,"12 oz"],
+["Flat white","☕",56,3,4.7,3,0,4.5,"ca110;by.4",160,"1 cup"],
+["Chamomile tea","🍵",1,0,.2,0,0,0,"mn.2;pot10",240,"1 cup"],
+["Ginger ale","🥤",34,0,8.8,0,0,8.7,"ca2;pot1",355,"1 can"],
+["Root beer","🥤",41,0,10.6,0,0,10.5,"ca2;pot1",355,"1 can"],
+["Diet cola","🥤",0,0,0,0,0,0,"ph12;pot2",355,"1 can"],
+["Sparkling water","💧",0,0,0,0,0,0,"ca12;mg2",355,"1 can"],
+["White wine","🍷",82,.1,2.6,0,0,1,"pot71;mg10",150,"5 oz glass"],
+["Champagne","🥂",76,.3,1.5,0,0,1,"pot66;mg7",125,"1 flute"],
+["Vodka","🥃",231,0,0,0,0,0,"pot2",42,"1 shot"],
+["Whiskey","🥃",250,0,0,0,0,0,"pot2",42,"1 shot"],
+["Light beer","🍺",29,.2,1.6,0,0,0,"ni1.2;pot27",355,"1 can"],
+["Rooh Afza drink","🥤",50,0,12.5,0,0,12,"ca2;pot15",250,"1 glass"],
+["Doodh patti chai","🍵",60,2.4,8,2,0,7.5,"ca70;pot100",240,"1 cup"],
+["Kashmiri chai (noon chai)","🫖",70,2.8,6,3.5,0,4,"ca90;pot130;by.3",240,"1 cup"],
+["Shikanjvi (lemon soda)","🍋",30,0,7.5,0,.1,7,"vc8;pot20",250,"1 glass"],
+["Jal jeera","🥤",18,.3,4,0,.3,3,"fe.8;vc3",240,"1 glass"],
+["Thandai","🥛",110,3.5,16,3.5,.3,14,"ca100;mg20;pot120",250,"1 glass"],
+["Badam doodh (almond milk)","🥛",100,3.5,13,3.5,.2,12,"ca110;mg15",250,"1 glass"],
+["Mango milkshake","🥭",95,2.8,17,2,.5,16,"vc10;ca90;va40",300,"1 glass"],
+["Banana milkshake","🍌",90,3,15,2,.8,12,"ca95;pot250;bx.2",300,"1 glass"],
+["Americano","☕",2,.1,.3,0,0,0,"pot50;mg5;ni.2",355,"12 oz"],
+["Doppio (double espresso)","☕",9,.2,1.7,.2,0,0,"pot115;mg8;ni.5",60,"2 shots"],
+["Ristretto","☕",9,.2,1.5,.2,0,0,"pot115;mg8",20,"1 shot"],
+["Lungo","☕",5,.1,.8,.1,0,0,"pot70;mg5",50,"1 shot"],
+["Espresso macchiato","☕",30,1.2,2.5,1.5,0,2,"ca40;pot120;by.2",60,"1 small cup"],
+["Cortado","☕",40,2,3,2,0,3,"ca70;pot140;by.3",120,"1 cortado"],
+["Café au lait","☕",30,1.7,2.5,1.5,0,2.4,"ca60;pot100;by.3",240,"1 cup"],
+["Vanilla latte","☕",70,2.5,10,2,0,9.5,"ca90;by.3;pot130",360,"12 oz"],
+["Caramel macchiato","☕",70,2.5,9,2.5,0,8.5,"ca90;by.3;pot130",360,"12 oz"],
+["Spanish latte","☕",75,2.8,12,2,0,11,"ca100;pot150;by.4",300,"1 cup"],
+["Iced latte","🧊",38,2,3,1.8,0,3,"ca80;pot120;by.3",360,"12 oz"],
+["Cold brew coffee","🧊",2,.1,0,0,0,0,"pot60;mg4;ni.2",355,"12 oz"],
+["Affogato","🍨",120,3,13,6,0,12,"ca90;pot150;by.3",150,"1 serving"],
+["Irish coffee","☕",90,.5,6,3.5,0,5,"pot60;ca20",240,"1 mug"],
+["Turkish coffee","☕",4,.2,.5,.1,0,0,"pot100;mg10;ni.3",60,"1 small cup"],
+["Vietnamese iced coffee","🧊",110,2.5,18,3,0,17,"ca80;pot180;by.3",250,"1 glass"],
+["Blended coffee (frappe)","🥤",95,1.5,17,2.5,0,16,"ca50;pot100",360,"12 oz"],
+["Dalgona coffee","🥛",70,2.5,10,2.5,0,9,"ca90;pot130;by.3",300,"1 glass"],
+["Instant coffee with milk and sugar","☕",40,1.2,6.5,1,0,6,"ca45;pot90",240,"1 cup"],
+["Decaf coffee","☕",1,.1,0,0,0,0,"pot49;mg3",237,"1 cup"]
+]},
+sweets:{label:"Desserts",emoji:"🍰",color:"var(--sweet)",items:[
+["Chocolate cake","🍰",371,5,53,16,2.7,36,"fe2.6;ca43;ph130",95,"1 slice"],
+["Cheesecake","🍰",321,5.5,25.5,22.5,.4,21,"ca63;va166;fe.5",120,"1 slice"],
+["Apple pie","🥧",237,1.9,34,11,1.6,15,"fe1;pot90",125,"1 slice"],
+["Pumpkin pie","🥧",229,3.9,30.4,10,2.2,15,"va190;fe1;ca60",109,"1 slice"],
+["Tiramisu","🍰",285,4.7,28,17,.5,19,"ca70;fe.8;va100",120,"1 slice"],
+["Cupcake","🧁",305,3.8,45,12,1,30,"ca50;fe1.2",50,"1 cupcake"],
+["Brownie","🍫",466,5.6,54,25,2.5,39,"fe2.5;mg49",56,"1 brownie"],
+["Chocolate chip cookie","🍪",488,5.5,64,24,2.4,36,"fe2.4;ca22;mg26",30,"1 cookie"],
+["Glazed donut","🍩",421,4.9,49,23,1.4,22,"fe1.9;ca38",60,"1 donut"],
+["Croissant","🥐",406,8.2,45.8,21,2.6,11,"fe2.2;ca37",57,"1 medium"],
+["Blueberry muffin","🧁",377,5.5,51,17,1.7,30,"ca30;fe1.5",113,"1 large"],
+["Pancakes","🥞",227,6.4,28,9.7,1.1,5,"ca132;fe1.4",77,"1 pancake"],
+["Waffle","🧇",291,7.9,32.7,14.1,1.8,5,"ca191;fe2.2",75,"1 waffle"],
+["Vanilla ice cream","🍨",207,3.5,23.6,11,.7,21,"ca128;by.5;va118",66,"½ cup"],
+["Chocolate ice cream","🍨",216,3.8,28.2,11,1.2,25,"ca107;pot199;fe.8",66,"½ cup"],
+["Frozen yogurt","🍦",159,4,24,5,0,20,"ca143;pot190",72,"½ cup"],
+["Crème caramel","🍮",124,3.9,19,3.7,0,19,"ca100;by.6",150,"1 ramekin"],
+["Rice pudding","🍚",130,3.1,21,3.6,.3,12,"ca110;pot140",125,"½ cup"],
+["Milk chocolate bar","🍫",535,7.7,59,30,3.4,52,"ca189;fe1.2;mg63",45,"1 bar"],
+["Gulab jamun","🟤",295,4.6,48,10,.5,33,"ca60;fe.8",50,"1 piece"],
+["Jalebi","🟠",380,2.6,64,13,.5,45,"fe1;ca25",40,"1 piece"],
+["Gajar (carrot) ka halwa","🥕",190,3,26,8.5,1.5,22,"va250;ca80",100,"small bowl"],
+["Baklava","🥮",430,6.7,48,24,2.6,29,"mg43;mn.8;fe1.6",45,"1 piece"],
+["Strawberry ice cream","🍨",192,3.2,24.5,9.2,.6,22,"ca120;by.4",66,"½ cup"],
+["Gelato","🍨",180,3.3,25,7,0,22,"ca100;by.3",90,"½ cup"],
+["Sorbet","🍧",130,.4,34,0,.5,30,"vc5;pot50",100,"½ cup"],
+["Ice cream sandwich","🍨",237,3.9,38,8,1,22,"ca80;fe.8",60,"1 sandwich"],
+["Ice pop","🧊",66,0,16.8,0,0,15,"pot5;vc1",59,"1 pop"],
+["Red velvet cake","🍰",360,4,50,17,.8,34,"ca40;fe1.2",100,"1 slice"],
+["Carrot cake","🥕",415,4,52,22,1.5,36,"va60;fe1.2;ca40",110,"1 slice"],
+["Lemon tart","🥧",280,4,38,13,.8,22,"vc2;ca30",100,"1 slice"],
+["Fruit tart","🥧",250,3.5,32,12,1.4,16,"vc5;fe.8;ca30",100,"1 slice"],
+["Pecan pie","🥧",412,5,58,18,2,38,"mn1;fe1.5",120,"1 slice"],
+["Strawberry shortcake","🍓",270,3.5,38,12,1.2,20,"vc10;ca50;fe1",130,"1 slice"],
+["Apple crumble","🍎",190,2,30,8,2,18,"fe.8;pot100",150,"1 serving"],
+["Banana bread","🍞",326,4.5,55,9,1.5,28,"fe1.4;pot150;mn.3",60,"1 slice"],
+["Cinnamon roll","🥐",380,5,55,15,1.5,25,"fe1.8;ca30",100,"1 roll"],
+["Danish pastry","🥐",374,5.8,48,18,1.4,20,"fe1.8;ca30",65,"1 pastry"],
+["Eclair","🥐",262,6,24,16,.9,14,"ca70;by.4;fe.8",100,"1 eclair"],
+["Macaron","🍪",390,7,60,13,2,50,"ca30;fe.8",40,"2 macarons"],
+["Churros","🥖",447,5.5,50,25,1.5,12,"fe2;ca20",50,"2 churros"],
+["Cannoli","🍰",300,7,30,17,1,15,"ca90;fe1",80,"1 cannoli"],
+["Panna cotta","🍮",230,3,20,15,0,18,"ca90;va120",120,"1 serving"],
+["Chocolate mousse","🍫",225,4,22,14,1,20,"ca70;fe1",100,"½ cup"],
+["Custard","🍮",122,3.9,16,4.3,0,14,"ca120;by.5",125,"½ cup"],
+["Chocolate truffle","🍫",480,5,40,34,3,32,"fe3;mg60",25,"2 truffles"],
+["White chocolate","🍫",539,5.9,59,32,0,59,"ca199;pot286",28,"1 oz"],
+["Oatmeal raisin cookie","🍪",430,6,67,16,3,36,"fe2;mn.6;mg30",30,"1 cookie"],
+["Peanut butter cookie","🍪",476,8,56,25,2.5,32,"ni3;mg40",30,"1 cookie"],
+["Shortbread","🍪",502,5.5,60,27,1.5,20,"fe1.5;se10",40,"2 pieces"],
+["Coconut macaroon","🥥",450,3,56,25,4,48,"mn.5;fe.8",25,"1 cookie"],
+["Marshmallow","⚪",318,1.8,81,.2,.1,60,"pot7;ca1",28,"1 oz"],
+["Caramel candy","🍬",382,4.9,77,7,0,60,"ca100;fe.2",28,"1 oz"],
+["Gelatin dessert","🟥",62,1.2,14,0,0,14,"pot1;ca2",140,"½ cup"],
+["Whipped cream","🍦",257,2.1,12.5,22,0,12,"va250;ca65",30,"¼ cup"],
+["Mochi","⚪",230,3.5,52,.5,.8,22,"fe.5;ca5",45,"1 piece"],
+["Taiyaki","🐟",230,5,43,4,1.5,18,"fe1;ca40",100,"1 piece"],
+["Dorayaki","🥞",290,6,57,4,2,28,"fe1.2;ca30",75,"1 piece"],
+["Halo-halo","🍧",150,3,32,2,1,25,"ca80;fe.8",300,"1 glass"],
+["Bingsu (shaved ice)","🍧",130,3,28,1.5,1,22,"ca60;fe.5",300,"1 bowl"],
+["Mango pudding","🥭",120,2,22,3,.5,19,"vc10;va60;ca40",120,"1 cup"],
+["Rasmalai","🍮",200,6,25,8,0,22,"ca120;by.4",80,"1 piece"],
+["Barfi","🟫",400,7,55,18,1,48,"ca120;fe.8",30,"1 piece"],
+["Ladoo","🟠",430,7,55,20,2,35,"fe1.8;mg30",40,"1 piece"],
+["Mysore pak","🟨",520,6,50,33,2,40,"fe1;ca20",30,"1 piece"],
+["Falooda","🍧",130,3,25,2.5,.8,20,"ca100;by.3",300,"1 glass"],
+["Kunafa","🍰",380,6,45,20,1,28,"ca100;fe1",100,"1 piece"],
+["Basbousa","🍰",330,4,50,13,1,30,"ca30;fe.8",80,"1 piece"],
+["Turkish delight","🍬",320,.4,79,.1,0,60,"pot8;ca3",30,"3 pieces"],
+["Halva","🟤",516,12.5,50,29,5,43,"fe3;mg100",30,"1 slice"],
+["Sheer khurma","🥣",180,5,28,5,1.5,20,"ca120;pot200",200,"1 bowl"],
+["Zarda (sweet rice)","🍚",200,2.5,40,4,.5,22,"mn.5;fe.5",150,"1 plate"],
+["Suji halwa","🟡",250,3,38,10,1,22,"fe1;ca20",100,"1 bowl"],
+["Imarti","🟠",400,3,65,14,.5,50,"fe1;ca20",40,"1 piece"],
+["Balushahi","🍩",440,5,52,23,1,35,"fe1.2;ca20",50,"1 piece"],
+["Pinni","🟤",480,9,48,28,3,30,"fe2;mg50",40,"1 piece"],
+["Sohan halwa","🟤",450,5,55,24,1,45,"ca20;fe1",30,"1 piece"],
+["Phirni","🍮",150,4,24,4,.2,18,"ca100;pot150",125,"1 cup"],
+["Shahi tukray","🍞",310,6,38,15,1,25,"ca100;fe1",100,"1 piece"],
+["Rabri","🥛",250,8,28,12,0,25,"ca250;by.8",100,"½ cup"],
+["Lab-e-shireen","🍨",150,3,28,3,1,22,"ca90;vc5",150,"1 bowl"],
+["Nankhatai","🍪",470,6,60,23,1,22,"fe1.5;ca20",25,"2 cookies"],
+["Kheer","🥣",130,3.5,20,4,.3,15,"ca110;pot150;by.3",150,"1 bowl"],
+["Rasgulla","⚪",186,5,38,1,0,35,"ca60;fe.4",50,"1 piece"],
+["Vanilla sponge cake","🍰",344,4.5,52,13,.8,35,"ca50;fe1.2",90,"1 slice"],
+["Black Forest cake","🍰",280,4,36,14,1.5,26,"ca60;fe1.5",120,"1 slice"],
+["Pineapple cake","🍰",300,3.5,45,12,.8,32,"vc2;ca40",100,"1 slice"],
+["Butterscotch cake","🍰",360,4,52,15,.5,38,"ca50;fe1",100,"1 slice"],
+["Lemon cake","🍋",340,4.5,50,14,.7,32,"vc2;ca30;fe1",90,"1 slice"],
+["Coffee cake","☕",380,5,52,17,1.5,28,"fe1.5;ca40",80,"1 slice"],
+["Marble cake","🍰",360,5,50,16,1,30,"ca40;fe1.3",90,"1 slice"],
+["Fruit cake","🍰",325,4,56,10,3,40,"fe1.5;pot200",80,"1 slice"],
+["Pound cake","🍰",390,5,50,19,.8,30,"ca30;fe1.2",80,"1 slice"],
+["Angel food cake","🍰",260,6,58,.3,.5,38,"ca13;pot66",30,"1 slice"],
+["Victoria sponge cake","🍰",300,5.5,50,9,.7,30,"ca50;fe1.2",80,"1 slice"],
+["Chocolate lava cake","🍫",380,6,45,19,2,30,"fe2;mg30",110,"1 cake"],
+["German chocolate cake","🍫",390,4.5,50,20,2,36,"fe2;ca40",110,"1 slice"],
+["Coconut cake","🥥",370,4,52,16,2,38,"fe1;ca30",100,"1 slice"],
+["Strawberry cake","🍓",330,4,50,13,1,32,"vc3;ca40",100,"1 slice"],
+["Mango cake","🥭",320,4,48,12,.8,30,"vc4;va30;ca40",100,"1 slice"],
+["Pineapple upside-down cake","🍍",300,3,44,12,.8,28,"vc3;ca50",100,"1 slice"],
+["Tres leches cake","🍰",270,5,34,12,.4,25,"ca120;by.3",120,"1 slice"],
+["Plain tea cake","🍰",360,6,52,14,.8,28,"ca40;fe1.3",60,"1 slice"],
+["Mango ice cream","🍨",180,3,25,8,.4,22,"vc5;ca100;va40",66,"½ cup"],
+["Butterscotch ice cream","🍨",220,3,30,10,0,28,"ca110;by.4",66,"½ cup"],
+["Pistachio ice cream","🍨",230,4.5,24,13,.8,21,"ca110;fe.5",66,"½ cup"],
+["Coffee ice cream","🍨",200,3.5,25,10,0,23,"ca110;pot180",66,"½ cup"],
+["Cookies and cream ice cream","🍨",230,3.5,29,11,.7,25,"ca100;fe.7",66,"½ cup"],
+["Mint chocolate chip ice cream","🍨",220,3.5,26,12,.8,24,"ca100;fe.8",66,"½ cup"],
+["Rocky road ice cream","🍨",250,4,32,12,1,28,"ca90;fe.8",70,"½ cup"],
+["Cookie dough ice cream","🍨",240,3.5,30,12,1,26,"ca90;fe.8",66,"½ cup"],
+["Butter pecan ice cream","🍨",245,4,24,15,1,21,"ca100;fe.5",66,"½ cup"],
+["Caramel ice cream","🍨",215,3.5,29,10,0,27,"ca110;by.4",66,"½ cup"],
+["Coconut ice cream","🥥",220,2.5,24,13,1.5,20,"ca60;fe.8",66,"½ cup"],
+["Neapolitan ice cream","🍨",205,3.5,26,10,.5,24,"ca100;by.4",66,"½ cup"],
+["Hot fudge sundae","🍨",215,4,32,8,.8,28,"ca120;fe.7",150,"1 sundae"],
+["Soft serve ice cream","🍦",160,4,23,5.6,0,17,"ca140;by.5;pot200",120,"1 cone"],
+["Chocolate ice cream bar","🍫",290,3.5,25,20,1,22,"ca80;fe.8",60,"1 bar"],
+["Mango kulfi","🥭",200,5,25,9,.5,22,"ca140;vc4",80,"1 stick"],
+["Pista kulfi","🍦",210,5,23,11,.5,20,"ca150;fe.5",80,"1 stick"],
+["Sherbet (orange)","🍧",140,1,30,2,1,25,"vc5;ca50",100,"½ cup"],
+["Frozen custard","🍦",210,4,23,12,0,21,"ca130;by.5;pot160",90,"½ cup"],
+["Vegan ice cream","🍨",170,2,24,7,1,18,"ca80;fe.5",66,"½ cup"],
+["Ice cream cake","🎂",280,4,35,14,.8,28,"ca100;fe.8",100,"1 slice"]
+]},
+west:{label:"Western food",emoji:"🍔",color:"var(--west)",items:[
+["Hamburger","🍔",250,13,31,9,1.2,6,"fe2.5;ca70;by1",105,"1 burger"],
+["Cheeseburger","🍔",263,14,28,11,1.3,5.6,"ca100;fe2.5;by1",120,"1 burger"],
+["Cheese pizza","🍕",266,11,33,10,2.3,3.6,"ca188;fe2.5;pot172",107,"1 slice"],
+["Pepperoni pizza","🍕",298,12,29,15,1.8,3,"ca180;fe2.4",110,"1 slice"],
+["French fries","🍟",312,3.4,41,15,3.8,.3,"pot579;vc4;bx.4",117,"1 medium"],
+["Hot dog with bun","🌭",290,10,24,17,1,4,"fe2.5;ca70",98,"1 hot dog"],
+["Fried chicken","🍗",246,19,10,14,.4,0,"ni7;bx.4;se20",100,"1 piece"],
+["Chicken nuggets","🍗",296,15,17,18,1,0,"ni5;se18;bx.2",64,"4 nuggets"],
+["Spaghetti bolognese","🍝",130,7,15,4.5,1.5,3,"fe1.5;se10;by.4",250,"1 plate"],
+["Macaroni and cheese","🧀",164,6.8,20,6.7,.9,3,"ca110;fe1",200,"1 cup"],
+["Lasagna","🍝",135,7.5,14,5.5,1.2,3,"ca120;fe1.1",250,"1 piece"],
+["Club sandwich","🥪",220,13,22,9,1.5,3,"ni4;se18;fe1.8",250,"1 sandwich"],
+["Grilled cheese sandwich","🧀",360,13,29,22,1.4,3.4,"ca330;fe2;ph250",130,"1 sandwich"],
+["Beef taco","🌮",226,9,20,12,2,1,"fe2;ca100;zn2",90,"1 taco"],
+["Bean burrito","🌯",206,7,31,6,4,1,"fe2.4;ca90",200,"1 burrito"],
+["Fish and chips","🐟",250,12,22,13,2,.5,"se25;by1;pot320",250,"1 plate"],
+["Grilled steak","🥩",244,27,0,14,0,0,"zn5.5;by2;ni8",170,"6 oz steak"],
+["Roast chicken","🍗",239,27,0,14,0,0,"ni10;bx.5;se26",85,"3 oz"],
+["Meatballs","🍖",197,13,8,12,.7,1,"fe1.8;zn2.5;by1",100,"4 meatballs"],
+["Cheese omelet","🍳",154,11,.6,12,0,.5,"ca100;by.9;se25",120,"1 omelet"],
+["Scrambled eggs","🍳",149,10,1.6,11,0,1.4,"by1.2;se30;vd1.5",100,"2 eggs"],
+["Bacon (cooked)","🥓",541,37,1.4,42,0,0,"ni9;se50;by1",16,"2 slices"],
+["Mashed potatoes","🥔",83,1.8,17,.9,1.5,1,"pot290;vc4;bx.2",210,"1 cup"],
+["Garlic bread","🥖",350,8,45,15,2.6,2,"fe2.8;ca90",50,"1 slice"],
+["Oatmeal (cooked)","🥣",71,2.5,12,1.5,1.7,.5,"mn.6;mg27;fe1",234,"1 cup"],
+["Granola","🥣",471,10,64,20,5,24,"mn2;mg90;fe2",50,"½ cup"],
+["Caesar salad with chicken","🥗",127,9,6,8,1,1,"vk60;ca60;se15",250,"1 bowl"],
+["Greek salad","🥗",90,3,5,7,1.5,3,"vc12;vk30;ca90",200,"1 bowl"],
+["Garden salad","🥗",20,1.2,3.5,.2,1.5,2,"vk80;va150;fol30",100,"1 bowl"],
+["Beef pot roast","🥘",200,24,2,10,.4,.8,"zn5;by2;fe2.5",100,"1 serving"],
+["Meatloaf","🍖",200,15,8,12,.5,3,"fe2;zn3;by1.5",100,"1 slice"],
+["Pork chop (cooked)","🥩",231,26,0,14,0,0,"se40;by.8;zn2.5",100,"1 chop"],
+["Pork sausage","🌭",301,18,1.5,25,0,0,"se20;by1;zn2",70,"2 links"],
+["Bratwurst","🌭",290,13,2,26,0,0,"se20;by1;zn2",85,"1 sausage"],
+["Hash browns","🥔",265,2.9,35,13,3,0,"pot450;vc4;fe1",100,"1 patty"],
+["Fried egg","🍳",196,13.6,.8,15,0,.4,"by1.1;vd2;se30",46,"1 large"],
+["French toast","🍞",229,7.9,25,10,1.2,8,"fe2.2;ca100;se20",65,"1 slice"],
+["Bagel with cream cheese","🥯",285,9,43,8.5,2,6,"fe2.8;ca50;se25",130,"1 bagel"],
+["Turkey sandwich","🥪",190,12,24,5,2,3,"ni5;se20;fe1.8",200,"1 sandwich"],
+["BLT sandwich","🥪",250,11,24,12,1.5,3,"se20;ni4;vk10",170,"1 sandwich"],
+["Peanut butter and jelly sandwich","🥪",340,11,45,13,3.2,17,"ni4;mg40;fe1.5",100,"1 sandwich"],
+["Pulled pork sandwich","🥪",220,16,23,7,1.5,6,"se25;by.6;ni5",200,"1 sandwich"],
+["Croque monsieur","🥪",300,15,22,17,1,3,"ca250;se25;fe1.5",180,"1 sandwich"],
+["Chili con carne","🌶️",120,9,11,4.7,3.5,2.5,"fe2;fol40;zn2",250,"1 cup"],
+["Clam chowder","🍲",90,4,10,3.8,.7,1.5,"fe2.5;by8;ca50",245,"1 cup"],
+["Tomato soup","🍅",41,1.6,6.6,1.2,1,4.5,"vc10;va30;pot230",248,"1 cup"],
+["Chicken noodle soup","🍲",36,2.4,4.2,1,.4,.5,"ni1;se6;fe.5",248,"1 cup"],
+["French onion soup","🧅",50,3,6,2,.8,2.5,"ca60;fe.5;pot80",245,"1 cup"],
+["Paella","🥘",150,9,17,5,1,1,"se20;fe1.5;vc4",250,"1 plate"],
+["Risotto","🍚",150,3.5,24,4,.5,.5,"ca60;se6",200,"1 cup"],
+["Gnocchi","🥔",132,3,27,1,1.2,.5,"fe.8;mn.2",150,"1 cup"],
+["Cheese ravioli","🥟",200,8,28,6,1.5,2,"ca100;fe1.5",125,"1 cup"],
+["Fettuccine Alfredo","🍝",190,6,20,9,1.2,1,"ca80;fe1.2",250,"1 plate"],
+["Spaghetti carbonara","🍝",190,8,22,7.5,1.3,.8,"se25;ca70;by.5",250,"1 plate"],
+["Pesto pasta","🍝",190,5.5,22,9,1.5,1,"vk30;ca50;fe1.3",220,"1 plate"],
+["Bruschetta","🍅",170,4,22,7,1.5,2,"vc4;fe1;vk10",60,"1 piece"],
+["Focaccia","🥖",270,7,41,9,2,2,"fe2.5;ca20",60,"1 piece"],
+["Baguette","🥖",270,9,56,1,2.4,3,"fe3;se30;fol100",60,"1 piece"],
+["Soft pretzel","🥨",338,8.5,70,2.6,2.5,2,"fe5;fol100;mn.8",120,"1 large"],
+["Quiche Lorraine","🥧",270,10,16,19,.6,2,"ca130;by.7;se25",140,"1 slice"],
+["Cottage pie","🥧",130,7,12,6,1.5,1.5,"fe1.5;pot300;zn1.5",250,"1 serving"],
+["Sausage roll","🥐",330,8,26,22,1,1,"fe1.2;ca30",70,"1 roll"],
+["Beef stroganoff","🥘",150,11,6,9,.5,1.5,"zn3;by1.5;fe1.5",250,"1 cup"],
+["Goulash","🥘",120,9,8,6,1.5,2,"fe2;zn2.5;pot320",250,"1 bowl"],
+["Pork schnitzel","🥩",270,18,15,15,.7,.5,"se30;by.7;zn2",120,"1 piece"],
+["Ratatouille","🍆",60,1.5,8,2.8,2.5,5,"vc15;vk10;pot300",200,"1 cup"],
+["Moussaka","🍆",150,8,9,9,1.8,3,"ca80;fe1.2;zn1.5",250,"1 piece"],
+["Gyro with pita","🥙",230,14,22,10,1.5,3,"ca60;fe2;se20",250,"1 gyro"],
+["Tzatziki","🥒",80,3,4,5,.4,3,"ca100;by.3",50,"¼ cup"],
+["Chicken fajita","🌯",160,12,14,6,2,3,"vc40;ni6;se20",150,"1 fajita"],
+["Guacamole","🥑",150,2,8,13,6,.7,"vk20;fol60;pot400",50,"¼ cup"],
+["Nachos with cheese","🧀",300,8,30,16,3,1.5,"ca180;fe1.5",100,"1 serving"],
+["Cheese quesadilla","🫓",300,12,26,16,1.5,1,"ca300;fe1.5",130,"1 quesadilla"],
+["Chicken enchilada","🌮",150,9,14,6,2,2,"ca100;fe1.2",150,"1 enchilada"],
+["Tamale","🫔",200,6,25,8,3,1,"fe1.5;ca40",100,"1 tamale"],
+["Beef empanada","🥟",280,8,28,15,1.5,2,"fe2;zn1.5",90,"1 empanada"],
+["Ceviche","🐟",90,12,5,2,.8,1,"vc15;se25;by1",150,"1 cup"],
+["Poutine","🍟",220,6,24,11,2,1,"ca100;pot400;fe.8",200,"1 serving"],
+["Buffalo wings","🍗",270,22,3,19,.3,.5,"ni8;se25;bx.5",100,"4 wings"],
+["Onion rings","🧅",411,5,43,24,3,5,"fe1.5;ca50",83,"6 rings"],
+["Coleslaw","🥗",150,1.1,14,10,1.5,10,"vc25;vk70",100,"½ cup"],
+["Potato salad","🥔",143,2.5,15,8,1.4,3,"vc8;pot320;vk10",125,"½ cup"],
+["Baked beans","🫘",94,4.8,21,.4,5,8,"fe1.6;pot300;mg35",130,"½ cup"],
+["Cornbread","🌽",300,6,42,12,2,10,"fe2;ca100",65,"1 piece"],
+["Potato chips","🍟",536,6.6,53,35,4.8,.3,"pot1275;vc19",28,"1 oz"],
+["Margherita pizza","🍕",250,10,31,9,2,3,"ca180;fe2.2;vc2",100,"1 slice"],
+["BBQ chicken pizza","🍕",235,12,30,7,1.5,6,"ca120;ni3;fe2",110,"1 slice"],
+["Veggie pizza","🍕",230,9,31,8,2.3,3.5,"ca150;fe2;vc6",105,"1 slice"],
+["Hawaiian pizza","🍕",245,11,31,9,1.8,4.5,"ca150;fe2;vc3",110,"1 slice"],
+["Meat lovers pizza","🍕",285,13,28,14,1.8,3,"ca160;fe2.3;zn1.8",115,"1 slice"],
+["Supreme pizza","🍕",270,12,29,12,2,3.5,"ca160;fe2.2;vc4",115,"1 slice"],
+["Chicken tikka pizza","🍕",245,12,30,9,1.8,3.5,"ca130;ni3;fe2",110,"1 slice"],
+["Chicken fajita pizza","🍕",245,12,29,9,1.8,3,"ca130;ni3;vc5",110,"1 slice"],
+["Four cheese pizza","🍕",285,14,28,13,1.5,3,"ca300;fe1.5",110,"1 slice"],
+["Mushroom pizza","🍕",235,10,31,8,2,3,"ca150;fe2;ni2",105,"1 slice"],
+["Deep dish pizza","🍕",270,11,28,13,2,4,"ca200;fe2.5",150,"1 slice"],
+["Thin crust pizza","🍕",260,11,28,11,1.8,3,"ca180;fe2",80,"1 slice"],
+["Stuffed crust pizza","🍕",290,13,31,12,1.8,3.5,"ca250;fe2.3",130,"1 slice"],
+["Calzone","🥟",245,12,28,9,1.8,3,"ca160;fe2.3",250,"1 calzone"],
+["Chicken burger","🍔",250,14,26,10,1.5,5,"ni5;fe2;se15",150,"1 burger"],
+["Zinger burger","🍔",270,14,27,12,1.5,4,"ni6;fe2;se16",180,"1 burger"],
+["Double cheeseburger","🍔",290,17,22,15,1.2,5,"ca180;fe2.8;zn3",200,"1 burger"],
+["Bacon cheeseburger","🍔",300,17,22,17,1.2,5,"ca160;fe2.5;zn3",200,"1 burger"],
+["Mushroom Swiss burger","🍔",270,16,22,13,1.5,4,"ca200;fe2.5;zn3",190,"1 burger"],
+["BBQ burger","🍔",270,14,30,11,1.5,10,"fe2.5;zn2.5",190,"1 burger"],
+["Veggie burger","🍔",190,8,26,6,4,4,"fe2;ca70;fol40",140,"1 burger"],
+["Fish burger","🍔",260,11,26,12,1.3,4,"ca60;fe1.8;se20",140,"1 burger"],
+["Turkey burger","🍔",200,17,18,7,1.2,4,"ni6;se20;zn2.5",140,"1 burger"],
+["Anda shami burger","🍔",250,10,28,11,1.5,3,"fe2;ca60;se12",160,"1 burger"],
+["Mini burger sliders","🍔",260,13,25,12,1,4,"fe2;ca60",120,"2 sliders"],
+["Loaded fries (cheese and bacon)","🍟",280,9,24,17,2,1,"ca150;pot450;vc8",200,"1 plate"],
+["Chicken loaded fries","🍟",250,12,22,13,2,2,"ca120;ni4;pot350",250,"1 plate"],
+["Cheese fries","🍟",260,6,28,14,2.5,.5,"ca150;pot450;vc5",200,"1 plate"],
+["Chili cheese fries","🍟",250,9,24,13,2.5,1.5,"ca120;pot480;fe1.5",250,"1 plate"],
+["Pizza fries","🍟",290,8,30,15,2,2,"ca160;fe1.5",200,"1 plate"],
+["Masala fries","🍟",290,3.5,38,14,3.5,1,"pot550;vc6;fe1",150,"1 plate"],
+["Peri peri fries","🍟",280,3.5,37,13,3.5,1,"pot520;vc8",150,"1 plate"],
+["Garlic parmesan fries","🍟",300,6,35,15,3,.5,"ca100;pot480",150,"1 plate"],
+["Curly fries","🍟",340,4.5,41,18,3.5,.5,"pot400;fe1",100,"1 serving"],
+["Waffle fries","🍟",280,3.5,36,14,3.5,.5,"pot500;vc5",120,"1 serving"],
+["Sweet potato fries","🍠",275,3,35,14,4,5,"va400;pot400",120,"1 serving"],
+["Potato wedges","🥔",200,3,28,9,3,1,"pot550;vc9",150,"1 serving"],
+["Tater tots","🥔",220,2.5,28,11,2.5,.5,"pot400;vc5",100,"1 serving"],
+["Chicken sandwich","🥪",230,15,24,8,1.5,3,"ni6;se18;fe1.8",180,"1 sandwich"],
+["Tuna sandwich","🥪",230,12,24,9,1.5,3,"se40;ni5;vd1",170,"1 sandwich"],
+["Egg sandwich","🥪",230,10,24,10,1.3,2,"by.7;se20;fe2",150,"1 sandwich"],
+["Philly cheesesteak","🥪",240,15,22,10,1.5,2,"ca150;fe2.5;zn3",250,"1 sandwich"],
+["Submarine sandwich","🥪",220,11,24,9,1.5,3,"ca100;fe2;se20",240,"6-inch sub"],
+["Chicken wrap","🌯",200,14,22,7,1.8,2,"ni6;se18",200,"1 wrap"],
+["Chili dog","🌭",250,10,22,14,1.5,3,"fe2;zn2",150,"1 hot dog"],
+["Corn dog","🌭",270,8,30,13,1,6,"fe1.5;ca40",175,"1 corn dog"],
+["Honey BBQ wings","🍗",280,22,12,16,.3,9,"ni8;se25",100,"4 wings"],
+["Chicken tenders","🍗",260,18,16,14,1,1,"ni6;se20",100,"3 tenders"],
+["Popcorn chicken","🍗",290,15,20,17,1,0,"ni5;se15",100,"1 cup"],
+["Mozzarella sticks","🧀",300,13,28,16,1.3,2,"ca300;fe1",80,"4 sticks"],
+["Jalapeno poppers","🌶️",280,8,20,18,2,2,"ca100;vc10",100,"4 poppers"],
+["Cheesy garlic bread","🥖",380,12,40,19,2,2,"ca200;fe2",70,"2 slices"],
+["Penne arrabbiata","🍝",150,5,24,4,2,3,"fe1.5;vc4;se20",250,"1 plate"],
+["Chicken alfredo pasta","🍝",200,12,20,8,1.5,2,"ca100;ni5;se30",280,"1 plate"],
+["Chicken taco","🌮",190,12,18,8,2,1,"ni4;se15;ca60",85,"1 taco"],
+["Fish taco","🌮",190,10,19,9,2,1,"se20;by.8;ca60",90,"1 taco"],
+["Chicken burrito","🌯",190,10,26,5,3,1.5,"ni3;fe2;ca80",250,"1 burrito"],
+["Chicken quesadilla","🫓",270,15,23,13,1.5,1,"ca250;ni4",150,"1 quesadilla"]
+]},
+east:{label:"Eastern food",emoji:"🍜",color:"var(--east)",items:[
+["Chicken biryani","🍛",150,8,19,4.5,.8,1,"by.5;ni3;fe1",300,"1 plate"],
+["Dal (lentil curry)","🍲",100,6,14,2.5,3.5,1.5,"fol80;fe1.8;pot280",200,"1 bowl"],
+["Chana masala","🍲",150,7,22,4.5,6,3,"fol100;fe2;mn.8",200,"1 bowl"],
+["Butter chicken","🍛",150,12,5,9,.8,3,"ca50;fe1.2;va100",250,"1 bowl"],
+["Tandoori chicken","🍗",150,24,2,5,.3,.5,"ni9;bx.5;se22",100,"1 piece"],
+["Paneer","🧀",321,21,3.6,25,0,2,"ca480;ph138;by.8",100,"1 serving"],
+["Roti (chapati)","🫓",297,9.9,46,7,5,1,"fe3;mg60;mn1",40,"1 roti"],
+["Naan","🫓",290,9,50,5.9,2,3,"fe2.5;ca70",90,"1 naan"],
+["Samosa","🥟",262,4.7,28,15,2,1.5,"fe1.7;pot200",50,"1 samosa"],
+["Idli","⚪",130,4,27,.4,1,.5,"fe1;fol30",40,"1 idli"],
+["Dosa","🥞",168,3.9,29,3.7,1.5,.5,"fe1.5;ca20",85,"1 dosa"],
+["Sushi roll","🍣",123,3.9,23,2,1.2,3.5,"mn.5;se10",150,"6 pieces"],
+["Miso soup","🍲",17,1.3,2.2,.5,.4,1,"mn.3;vk3;pot30",240,"1 bowl"],
+["Ramen","🍜",90,5,12,2.5,.6,.8,"fe.8;ni1.5;mn.3",450,"1 bowl"],
+["Fried rice","🍚",163,4,25,5,1,.5,"mn.5;fe1",198,"1 cup"],
+["Chow mein","🍜",130,5,17,5,1.4,2,"fe1;se12",220,"1 cup"],
+["Steamed dumplings","🥟",170,7,20,6,1,1,"fe1.3;se10",100,"4 dumplings"],
+["Spring roll","🥠",220,5,25,11,2,2,"fe1.5;vk12",60,"1 roll"],
+["Kung pao chicken","🍗",180,14,9,10,1.5,4,"ni6;se20;fe1",200,"1 cup"],
+["Pad Thai","🍜",160,6,22,5,1.5,4,"fe1.8;ca40;vc3",250,"1 plate"],
+["Thai green curry","🍛",125,7,5,9,1,2,"fe1.4;vc7;pot200",240,"1 cup"],
+["Tom yum soup","🍲",30,3,3,1,.5,1.5,"vc6;fe.8;pot100",240,"1 bowl"],
+["Kimchi","🥬",15,1.1,2.4,.5,1.6,1.1,"vk43;vc18;fe.3",75,"½ cup"],
+["Bibimbap","🍚",120,5,20,2.5,2,2,"fe1.5;vc5;fol40",400,"1 bowl"],
+["Falafel","🧆",333,13,32,18,5,2,"fe3.4;mg82;fol100",51,"3 pieces"],
+["Chicken shawarma wrap","🌯",190,12,18,8,1.5,2,"ni6;se20;fe1.5",250,"1 wrap"],
+["Lamb kebab","🍢",230,25,1,14,0,0,"zn4.5;by2;fe2",100,"1 skewer"],
+["Palak paneer","🥬",140,7,6,10,2,2,"ca150;fe2;vk100",200,"1 bowl"],
+["Aloo gobi","🥔",90,2.5,11,4,2.5,2,"vc20;pot350;vk10",200,"1 bowl"],
+["Rajma (kidney bean curry)","🍲",110,6,16,2.5,5,2,"fol100;fe2;pot350",200,"1 bowl"],
+["Chicken tikka masala","🍛",140,11,6,8,1,3,"ni5;ca40;fe1",250,"1 bowl"],
+["Mutton curry","🍛",160,13,4,10,.8,1.5,"zn3;fe2;by2",200,"1 bowl"],
+["Egg curry","🍳",130,8,6,8,1,2,"by.8;se20;fe1.5",200,"1 bowl"],
+["Fish curry","🐟",110,11,4,6,.8,1.5,"by2;se25;vd2",200,"1 bowl"],
+["Sambar","🍲",55,2.5,8,1.5,2,2,"fe1;pot250;vc4",200,"1 bowl"],
+["Rasam","🍲",25,1,4,.6,.8,1.5,"vc5;fe.5;pot150",200,"1 bowl"],
+["Plain paratha","🫓",326,7,45,13,3,1,"fe2.5;ca30",80,"1 paratha"],
+["Aloo paratha","🫓",260,5,38,10,3,1,"fe1.5;pot250;vc3",100,"1 paratha"],
+["Puri","🫓",400,7,50,19,2,1,"fe2;ca20",30,"1 puri"],
+["Vegetable pulao","🍚",150,3,26,4,1.5,2,"mn.5;fe1",200,"1 cup"],
+["Khichdi","🍲",120,4,20,2.5,2,1,"fe1.2;fol40",200,"1 bowl"],
+["Raita","🥣",55,2.5,5,2.5,.4,4,"ca80;by.4",100,"½ cup"],
+["Pakora","🍤",280,6,24,17,3,2,"fe2;fol40",60,"4 pieces"],
+["Dhokla","🟨",160,6,25,4,2,5,"fe1.5;ca40",100,"3 pieces"],
+["Pav bhaji","🍛",150,4,20,6,2.5,4,"vc10;fe1.5;vk8",250,"1 plate"],
+["Vada pav","🍔",270,6,38,10,3,3,"fe1.8;ca40",120,"1 vada pav"],
+["Pani puri","🥟",200,4,28,8,2.5,3,"fe1.5;vc4",100,"6 pieces"],
+["Poha","🍚",130,2.5,25,2.5,1,1.5,"fe2;vc2",150,"1 plate"],
+["Upma","🥣",125,3,18,4.5,1.5,1,"fe1;mg30",200,"1 bowl"],
+["Uttapam","🥞",150,4,25,3.5,1.5,1,"fe1;ca30",100,"1 uttapam"],
+["Medu vada","🍩",260,8,25,14,3,.5,"fe2;mg45",50,"1 vada"],
+["Kulfi","🍦",190,5,22,9,0,20,"ca150;by.5",80,"1 stick"],
+["Peking duck","🦆",337,19,0,28,0,0,"fe2.7;se20;zn2.6",100,"1 serving"],
+["Sweet and sour pork","🍖",200,9,24,8,.8,12,"pot250;vc5;se20",200,"1 cup"],
+["Mapo tofu","🌶️",110,8,4,7,.8,1,"ca120;fe2;mn.5",200,"1 cup"],
+["Wonton soup","🥟",40,2.7,4.7,1,.4,.5,"fe.5;se8;ca8",250,"1 bowl"],
+["Congee (rice porridge)","🥣",45,1.5,9,.3,.2,0,"mn.2;fe.2",250,"1 bowl"],
+["Char siu pork","🍖",260,24,12,12,0,10,"se30;by.7;zn2.5",100,"1 serving"],
+["Har gow (shrimp dumpling)","🥟",170,8,20,6,.8,1,"se18;fe.8;ca40",90,"3 pieces"],
+["Pork bun (baozi)","🥟",230,8,33,7,1.5,6,"fe1.5;ca50",100,"1 bun"],
+["Hainanese chicken rice","🍚",170,8,27,3,.5,.5,"ni3;se20;bx.2",300,"1 plate"],
+["Beef and broccoli","🥦",100,8,7,4.5,1.5,3,"vc30;vk60;zn2",250,"1 cup"],
+["Orange chicken","🍊",250,14,30,8,1,15,"vc8;ni5;se15",200,"1 cup"],
+["Lo mein","🍜",140,5,19,5,1.5,3,"fe1;se12;vk6",220,"1 cup"],
+["Shrimp tempura","🍤",230,13,17,12,.8,1,"se25;by1;ca50",100,"4 pieces"],
+["Teriyaki chicken","🍗",160,20,8,4.5,.3,6,"ni10;se20;bx.5",150,"1 serving"],
+["Tonkatsu","🥩",270,20,15,15,1,1,"se35;by.7;zn2",150,"1 cutlet"],
+["Udon noodles (cooked)","🍜",127,3,26,.3,1,.5,"mn.3;fe.8",200,"1 cup"],
+["Soba noodles (cooked)","🍜",99,5.1,21.4,.1,1.6,.5,"mn.5;mg30;ni.5",114,"1 cup"],
+["Onigiri (rice ball)","🍙",165,3.3,35,1,.5,.3,"mn.5;se8",110,"1 ball"],
+["Yakitori chicken skewer","🍢",170,22,6,6,0,5,"ni9;se20;bx.5",60,"2 skewers"],
+["Okonomiyaki","🥞",190,7,20,9,1.5,3,"vc10;vk30;se15",150,"1 pancake"],
+["Katsu curry","🍛",180,8,22,7,1.5,3,"fe1.5;vk8;pot250",400,"1 plate"],
+["Takoyaki","🐙",180,7,22,7,.8,2,"se20;fe1;by1",60,"3 balls"],
+["Salmon sashimi","🍣",142,20,0,6,0,0,"vd11;by3;se36",100,"5 slices"],
+["Nigiri sushi","🍣",150,6,26,1,.5,.5,"se10;by.7;mn.2",60,"2 pieces"],
+["Gyoza","🥟",220,8,24,10,1.2,1.5,"fe1.2;se12",100,"5 pieces"],
+["Bulgogi","🥩",200,18,8,11,.3,6,"zn4;by2;fe2",150,"1 serving"],
+["Japchae","🍜",130,2.5,23,3,1.5,5,"vk15;vc5;mn.4",200,"1 cup"],
+["Tteokbokki","🍢",140,3,30,1,1,5,"fe.8;mn.3",200,"1 cup"],
+["Korean fried chicken","🍗",290,21,16,16,.6,6,"ni8;se22;bx.4",120,"3 pieces"],
+["Pho","🍜",50,4,6,1.2,.4,.5,"fe.8;vc3;ca12",500,"1 bowl"],
+["Banh mi","🥖",230,10,28,8,2,3,"fe2;vc4;se15",200,"1 sandwich"],
+["Fresh spring roll","🥬",110,4,18,1.5,1.2,2,"vc4;vk8;fol10",80,"1 roll"],
+["Nasi goreng","🍚",175,6,26,5.5,1.2,3,"fe1.5;mn.5",250,"1 plate"],
+["Chicken satay","🍢",190,20,5,10,.8,3,"ni9;se20;mg30",100,"4 skewers"],
+["Laksa","🍜",120,5,10,7,1,1.5,"fe1.5;vc4",450,"1 bowl"],
+["Massaman curry","🍛",150,8,10,9,1.8,4,"fe1.5;pot300;vc5",240,"1 cup"],
+["Som tam (papaya salad)","🥗",70,2,12,2,2.5,7,"vc40;fol35;vk15",150,"1 cup"],
+["Mango sticky rice","🥭",180,2.5,35,3.5,1.2,12,"vc10;va30;mn.4",150,"1 plate"],
+["Beef rendang","🥘",220,22,5,12,1,2,"zn5;fe3;by2",100,"1 serving"],
+["Chicken adobo","🍗",170,16,3,10,.3,1.5,"ni6;se18;bx.4",150,"1 serving"],
+["Pancit noodles","🍜",150,6,22,4,1.5,2,"vc6;fe1.2;vk8",200,"1 cup"],
+["Tabbouleh","🌿",110,2,12,6,2.5,1.5,"vk150;vc20;fol30",100,"½ cup"],
+["Baba ganoush","🍆",130,2.5,8,10,3,3,"pot200;mn.3;vk8",60,"¼ cup"],
+["Shakshuka","🍳",100,6,6,6,1.5,4,"vc15;by.5;se15",250,"1 serving"],
+["Kofta kebab","🍢",230,17,4,16,.5,1,"zn4;by2;fe2",100,"2 pieces"],
+["Pita bread","🫓",275,9,56,1.2,2.2,1,"fe2.9;se30;mn.9",60,"1 pita"],
+["Fattoush","🥗",110,2.5,12,6,2,2,"vc20;vk100;fol50",150,"1 cup"],
+["Dolma (stuffed grape leaves)","🍃",160,3,20,7,3,2,"vk100;fe1.5;mn.5",100,"4 pieces"],
+["Manakish with zaatar","🫓",280,7,40,10,3,1,"fe3;ca30",120,"1 flatbread"],
+["Nihari","🍲",160,12,4,11,.5,1,"fe2.5;zn4;by2",250,"1 bowl"],
+["Haleem","🥣",150,9,14,6,3,1,"fe2.5;zn2.5;mg40",250,"1 bowl"],
+["Paya (trotters curry)","🍲",140,12,2,10,.3,.5,"zn3;ca30",250,"1 bowl"],
+["Chicken karahi","🍛",150,14,5,9,1.2,2,"ni7;se20;vc10",250,"1 serving"],
+["Mutton karahi","🍛",180,15,4,12,1,2,"zn4;fe2.5;by2",250,"1 serving"],
+["Chicken handi","🍛",160,13,5,10,1,2,"ni7;se18;vc8",250,"1 serving"],
+["Chicken korma","🍛",170,12,6,11,1,3,"ni6;ca50;se15",250,"1 bowl"],
+["Palak gosht","🍲",120,9,4,8,1.5,1,"vk100;fe2.5;zn3",250,"1 bowl"],
+["Aloo gosht","🍲",120,8,8,6,1.2,1.5,"zn3;pot300;by1",250,"1 bowl"],
+["Keema (mince curry)","🍛",190,14,4,13,1,1.5,"zn4;fe2.5;by2",150,"1 serving"],
+["Aloo keema","🍛",150,9,10,8,1.5,1.5,"zn3;pot300;fe1.8",200,"1 bowl"],
+["Kofta curry","🍛",160,9,6,11,1,2,"zn3;fe2;by1",200,"1 bowl"],
+["Seekh kabab","🍢",230,17,4,16,.8,1,"zn4;by2;fe2",100,"2 pieces"],
+["Shami kabab","🧆",200,14,10,11,2,1,"fe2.5;zn3;by1.5",80,"2 pieces"],
+["Chapli kabab","🍖",260,16,8,18,1,1,"fe2.5;zn3;by1.5",100,"1 kabab"],
+["Chicken tikka","🍗",165,24,3,6,.5,1,"ni10;se22;bx.6",120,"4 pieces"],
+["Malai boti","🍗",200,18,3,13,.3,1,"ca30;ni8;se20",120,"4 pieces"],
+["Sajji (roast chicken)","🍗",200,26,0,10,0,0,"ni10;bx.5;se22",150,"1 leg"],
+["Lahori fried fish","🐟",230,18,10,13,.5,.5,"by2;se25;vd3",120,"1 piece"],
+["Fish tikka","🐟",160,22,3,6,.3,.5,"vd5;by2;se30",120,"4 pieces"],
+["Chicken pulao","🍚",160,8,23,4,.8,1,"ni3;fe1;se10",250,"1 plate"],
+["Beef pulao","🍚",170,8,23,5,.8,1,"zn2;fe1.5;by.8",250,"1 plate"],
+["Beef biryani","🍛",160,8,20,5.5,.8,1,"zn2;fe1.5;by.8",300,"1 plate"],
+["Sindhi biryani","🍛",165,8,21,5.5,1.5,1.5,"fe1.5;vc4;ni3",300,"1 plate"],
+["Tahari (potato rice)","🍚",150,3,26,4,1.5,1,"pot200;fe1;vc3",250,"1 plate"],
+["Dal chawal","🍚",125,4.5,22,2,2,.5,"fe1.5;fol50;mn.4",300,"1 plate"],
+["Dal mash (urad dal)","🍲",110,6,15,3,3,1,"fe2;fol60;mg30",200,"1 bowl"],
+["Dal chana","🍲",125,7,17,3,4,2,"fe2.2;fol90;mn.5",200,"1 bowl"],
+["Masoor dal","🍲",100,6.5,15,1.5,3.5,1,"fe2;fol80",200,"1 bowl"],
+["Dal tadka","🍲",110,6.5,15,3,3.5,1.5,"fol80;fe2;pot300",200,"1 bowl"],
+["Lobia curry","🍲",110,6,16,2.5,4,2,"fol150;fe1.8;pot280",200,"1 bowl"],
+["Sarson ka saag","🥬",70,3.5,6,4,2.5,1.5,"vk250;va200;vc30",150,"1 bowl"],
+["Bhindi masala (okra curry)","🌿",90,2,8,6,3,3,"vk25;vc15;fol50",150,"1 bowl"],
+["Baingan bharta","🍆",90,2,8,6,3,4,"vc6;pot250;mn.2",150,"1 bowl"],
+["Aloo matar","🥔",110,3.5,15,4.5,3,2.5,"vc12;pot350;fol40",200,"1 bowl"],
+["Matar paneer","🧀",150,7,8,10,2,3,"ca120;vc8;fol40",200,"1 bowl"],
+["Mixed vegetable curry","🥘",90,2.5,10,4.5,3,3,"va100;vc10;vk30",200,"1 bowl"],
+["Kadhi pakora","🍲",100,4,9,5.5,1.2,3,"ca90;fe1;by.3",200,"1 bowl"],
+["Masala omelet","🍳",170,10,3,13,.5,1,"by1;se25;vc5",120,"1 omelet"],
+["Chana chaat","🥗",130,5,20,3,5,4,"fe1.8;vc8;fol70",150,"1 plate"],
+["Fruit chaat","🍎",70,.8,17,.3,2,12,"vc20;pot180",150,"1 bowl"],
+["Dahi bhalla","🥣",150,6,18,6,2,5,"ca100;fe1.2",150,"1 plate"],
+["Papri chaat","🥗",230,5,30,10,3,5,"fe1.5;ca50",120,"1 plate"],
+["Aloo tikki","🥔",190,3,28,7.5,2.5,1,"pot350;vc8;fe1",80,"1 piece"],
+["Bread pakora","🍞",260,7,30,12,2,2,"fe2;ca40",80,"1 piece"],
+["Kachori","🥟",350,6,38,19,3,1,"fe2.2;ca30",60,"1 piece"],
+["Namak para","🥨",450,7,55,22,2,2,"fe2;ca20",30,"1 handful"],
+["Bun kabab","🍔",270,10,30,12,2,4,"fe2.5;ca50;zn1.5",150,"1 bun kabab"],
+["Chicken paratha roll","🌯",250,11,25,12,1.5,2,"ni4;fe1.8;se15",200,"1 roll"],
+["Egg paratha","🍳",270,8,28,14,1.5,1,"fe2;by.5;se20",120,"1 paratha"],
+["Halwa puri","🫓",330,5,48,13,2,15,"fe1.8;ca30",150,"1 plate"],
+["Tandoori roti","🫓",260,8,52,2,3,1,"fe2.5;mn.8",60,"1 roti"],
+["Rumali roti","🫓",270,8,52,3,2.5,1,"fe2.5;mn.7",50,"1 roti"],
+["Kulcha","🫓",290,8,50,6,2,3,"fe2.5;ca50",90,"1 kulcha"],
+["Sheermal","🫓",330,8,52,10,2,12,"fe1.8;ca40",90,"1 sheermal"],
+["Bhatura","🫓",320,7,45,13,2,1,"fe2;ca20",80,"1 bhatura"],
+["Gobi paratha","🫓",250,6,34,10,3,1.5,"fe2;vc10;ca40",110,"1 paratha"],
+["Paneer paratha","🫓",290,9,32,14,2,1.5,"ca150;fe1.8",110,"1 paratha"],
+["Mooli (radish) paratha","🫓",240,5.5,33,9.5,3,1.5,"fe1.8;vc6;ca40",110,"1 paratha"],
+["Methi paratha","🫓",270,7,35,11,4,1,"fe3;ca100;vc8",90,"1 paratha"],
+["Keema paratha","🫓",290,12,28,14,2,1,"zn2.5;fe2.5;by1",120,"1 paratha"],
+["Lachha paratha","🫓",330,7,43,14,2.5,1,"fe2.3;ca30",80,"1 paratha"],
+["Palak paratha","🫓",260,6.5,35,10,3.5,1,"fe3;vk100;fol60",100,"1 paratha"],
+["Onion paratha","🫓",265,6,36,10.5,3,2,"fe2;ca40;vc3",100,"1 paratha"],
+["Mixed vegetable paratha","🫓",250,6,34,10,3.5,2,"va80;fe2;vc6",110,"1 paratha"],
+["Pudina paratha","🫓",275,6.5,36,11,3.5,1,"fe2.5;ca50;va30",90,"1 paratha"],
+["Ajwain paratha","🫓",320,7,44,13,3,1,"fe2.5;ca40",80,"1 paratha"],
+["Cheese paratha","🫓",310,10,34,15,2,1.5,"ca200;fe1.8",110,"1 paratha"],
+["Dal paratha","🫓",270,9,38,9,4.5,1,"fe2.5;fol50;mg50",100,"1 paratha"],
+["Matar paratha","🫓",255,7,35,10,4,2,"fe2;vc8;fol40",100,"1 paratha"],
+["Malabar parotta","🫓",350,7,50,13,2,2,"fe2;ca30",100,"1 parotta"],
+["Meethi paratha (sweet)","🫓",340,6,52,12,2,18,"fe1.8;ca30",90,"1 paratha"],
+["Instant noodles (Knorr)","🍜",455,9.1,60.6,19.7,9.1,6,"ca30;fe.6;pot167",66,"1 pack"],
+["Instant noodles (Knorr Chatt Patta)","🍜",447,10.6,56,20.5,9.1,3,"ca30;fe.2;pot170",66,"1 pack"]
+]}
+};
+
+var SERV={"Apple":[182,"1 medium"],"Banana":[118,"1 medium"],"Orange":[131,"1 medium"],"Mango":[165,"1 cup sliced"],"Strawberry":[152,"1 cup"],"Grapes":[151,"1 cup"],"Watermelon":[152,"1 cup diced"],"Pineapple":[165,"1 cup chunks"],"Papaya":[145,"1 cup cubes"],"Pear":[178,"1 medium"],"Pomegranate":[87,"½ cup seeds"],"Avocado":[100,"½ fruit"],
+"Carrot":[61,"1 medium"],"Spinach":[30,"1 cup raw"],"Broccoli":[91,"1 cup chopped"],"Tomato":[123,"1 medium"],"Potato":[173,"1 medium"],"Onion":[110,"1 medium"],"Cucumber":[104,"1 cup sliced"],"Cauliflower":[107,"1 cup"],"Sweet potato":[130,"1 medium"],"Red bell pepper":[119,"1 medium"],"Cabbage":[89,"1 cup shredded"],"Green peas":[145,"1 cup"],
+"White rice (cooked)":[158,"1 cup"],"White bread":[25,"1 slice"],"Egg (boiled)":[50,"1 large"],"Whole milk":[244,"1 cup"],"Chicken breast (cooked)":[85,"3 oz"],"Lentils (cooked)":[198,"1 cup"],"Chickpeas (cooked)":[164,"1 cup"],"Oats (dry)":[40,"½ cup"],"Pasta (cooked)":[140,"1 cup"],"Cheddar cheese":[28,"1 oz slice"],"Almonds":[28,"1 oz (23 nuts)"],"Salmon (cooked)":[85,"3 oz fillet"]};
+var MN={vc:["Vitamin C","mg"],va:["Vitamin A","µg"],vk:["Vitamin K","µg"],ve:["Vitamin E","mg"],bx:["Vitamin B6","mg"],fol:["Folate","µg"],ca:["Calcium","mg"],fe:["Iron","mg"],pot:["Potassium","mg"],mg:["Magnesium","mg"],mn:["Manganese","mg"],se:["Selenium","µg"],ni:["Niacin","mg"],vd:["Vitamin D","µg"],by:["Vitamin B12","µg"],ph:["Phosphorus","mg"],zn:["Zinc","mg"]};
+function fmt(n){return n>=10?Math.round(n):Math.round(n*10)/10}
+// Converts per-100 g data into one serving
+function sv(x){
+  var g,l,m;
+  if(typeof x[8]==="string"){g=x[9];l=x[10];m=x[8].split(";").map(function(t){var r=/^([a-z]+)([\d.]+)$/.exec(t);return[MN[r[1]][0],parseFloat(r[2]),MN[r[1]][1]]})}
+  else{var S=SERV[x[0]];g=S[0];l=S[1];m=x[8].map(function(v){var p=v[1].split(" ");return[v[0],parseFloat(p[0]),p[1]]})}
+  var f=g/100;
+  return{kcal:Math.round(x[2]*f),p:fmt(x[3]*f),c:fmt(x[4]*f),f:fmt(x[5]*f),fi:fmt(x[6]*f),s:fmt(x[7]*f),g:g,label:l,micro:m.map(function(v){return[v[0],fmt(v[1]*f)+" "+v[2]]})};
+}
+var app=document.getElementById("app");
+
+// Nutrient list for searching by nutrient (name, unit, serving key for macros, aliases)
+var NUTS=[{n:"Protein",u:"g",k:"p",al:[]},{n:"Carbs",u:"g",k:"c",al:["carbohydrates","carbohydrate","carb"]},{n:"Fat",u:"g",k:"f",al:["fats"]},{n:"Fiber",u:"g",k:"fi",al:["fibre"]},{n:"Sugar",u:"g",k:"s",al:["sugars"]},{n:"Calories",u:"kcal",k:"kcal",al:["calorie","energy"]}];
+Object.keys(MN).forEach(function(c){
+  var nm=MN[c][0],al=[];
+  if(nm.indexOf("Vitamin ")===0){var L=nm.slice(8).toLowerCase();al=[L,"vit "+L,"vit"+L,"vitamin"+L]}
+  if(nm==="Folate")al=["folic acid","b9","vitamin b9"];
+  NUTS.push({n:nm,u:MN[c][1],k:null,al:al});
+});
+function findNuts(t){
+  return NUTS.filter(function(nu){
+    var name=nu.n.toLowerCase();
+    if(name===t||nu.al.indexOf(t)>-1)return true;
+    if(t.length<3)return false;
+    return name.indexOf(t)>-1||nu.al.some(function(a){return a.indexOf(t)===0});
+  });
+}
+function amt(x,nu){
+  var s=sv(x);
+  if(nu.k)return s[nu.k];
+  for(var i=0;i<s.micro.length;i++)if(s.micro[i][0]===nu.n)return parseFloat(s.micro[i][1]);
+  return 0;
+}
+
+
+var meals={breakfast:[],lunch:[],dinner:[]};
+var MEAL=[["breakfast","Breakfast","🌅","var(--base)"],["lunch","Lunch","☀️","var(--veg)"],["dinner","Dinner","🌙","var(--fruit)"]];
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function itemBtn(cat,i,x,sm){
+  return '<button class="item" style="--c:'+DATA[cat].color+'" data-go="#/item/'+cat+'/'+i+'"><span class="e">'+x[1]+'</span><span><b>'+esc(x[0])+'</b><small>'+(sm||sv(x).kcal+' kcal')+'</small></span></button>';
+}
+
+// PAGE 1: home
+function home(cat){
+  var tiles=Object.keys(DATA).map(function(k){var d=DATA[k];
+    return '<button class="tile" style="--c:'+d.color+'" data-go="#/cat/'+k+'"><span>'+d.emoji+'</span><b>'+d.label+'</b><small>'+d.items.length+' foods</small></button>';
+  }).join("");
+  app.innerHTML='<section class="hero"><div class="kick">🥗 Nutrical</div><h1>Know what is on your plate.</h1><p>Look up calories and nutrients in fruits, vegetables, drinks, desserts and dishes from around the world, then check a whole day of meals.</p>'+
+    '<input class="search" id="q" type="search" placeholder="Search a food or nutrient, e.g. iron" aria-label="Search foods" autocomplete="off"></section>'+
+    '<div id="out" style="margin-top:20px"></div>'+
+    '<section class="sec"><h2>What is nutrition?</h2><p class="sub">Nutrition is how the food you eat gives your body the energy and building blocks it needs to grow, move, think and stay healthy. A balanced diet gives you enough of every nutrient without too many extra calories.</p>'+
+    '<div class="grid3"><div class="info"><div class="ic">⚡</div><h3>Calories</h3><p>The energy in food, measured in kcal. Most adults need around 2,000 kcal a day.</p></div>'+
+    '<div class="info"><div class="ic">💪</div><h3>Macronutrients</h3><p>Protein, carbohydrates and fat give energy, build muscle and keep you full. Fiber keeps digestion healthy.</p></div>'+
+    '<div class="info"><div class="ic">🍊</div><h3>Vitamins and minerals</h3><p>Tiny amounts that protect your bones, blood, skin and immune system. Variety is the key.</p></div></div></section>'+
+    '<section class="sec"><h2>Explore foods</h2><p class="sub">Pick a category to see every food and its nutrients per serving.</p><div class="tiles">'+tiles+'</div></section>'+
+    '<section class="cta"><h2>How was your day of eating?</h2><p>Add your breakfast, lunch and dinner and see what you got and what is missing.</p><button class="go" data-go="#/calc">Let’s calculate →</button></section>';
+  var q=document.getElementById("q");
+  function draw(){
+    var t=q.value.trim().toLowerCase(),h="";
+    if(t){
+      var n=0,fh="",nuts=findNuts(t);
+      Object.keys(DATA).forEach(function(k){DATA[k].items.forEach(function(x,i){
+        if(x[0].toLowerCase().indexOf(t)>-1){fh+=itemBtn(k,i,x);n++}
+      })});
+      var foodsBlock=(n&&(!nuts.length||t.length>=3))?'<h2 style="margin-top:22px">Foods named “'+esc(q.value)+'”</h2><div class="list">'+fh+'</div>':'';
+      if(nuts.length===1){
+        var nu=nuts[0],rows=[];
+        Object.keys(DATA).forEach(function(k){DATA[k].items.forEach(function(x,i){var a=amt(x,nu);if(a>0)rows.push([k,i,x,a,sv(x)])})});
+        rows.sort(function(a,b){return b[3]-a[3]});
+        h='<h2>Foods with '+esc(nu.n)+'</h2><p class="sub" style="margin:0 0 12px">Per serving, highest first'+(rows.length>40?' (top 40)':'')+'.</p><div class="list">'+rows.slice(0,40).map(function(r){return itemBtn(r[0],r[1],r[2],fmt(r[3])+" "+nu.u+" · "+r[4].label)}).join("")+'</div>'+foodsBlock;
+      }else if(nuts.length>1){
+        h='<h2>Which nutrient?</h2><div class="chips">'+nuts.map(function(nu){return '<button class="chip" data-nut="'+esc(nu.n)+'">'+esc(nu.n)+'</button>'}).join("")+'</div>'+foodsBlock;
+      }else{
+        h=n?'<h2>Results</h2><div class="list">'+fh+'</div>':'<div class="empty">No match for “'+esc(q.value)+'”. Please write it the way it appears in the categories (for example “Chicken biryani” or “Orange juice”), otherwise it cannot be detected.</div>';
+      }
+    }else if(cat){
+      h='<h2>'+DATA[cat].label+'</h2><div class="list">'+DATA[cat].items.map(function(x,i){return itemBtn(cat,i,x)}).join("")+'</div>';
+    }else{
+      h="";
+    }
+    document.getElementById("out").innerHTML=h;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-nut]"),function(b){
+      b.addEventListener("click",function(){q.value=b.getAttribute("data-nut");draw();q.focus()});
+    });
+  }
+  q.addEventListener("input",draw);draw();
+}
+
+// PAGE 2: foods in one category
+var BL={fruits:"Sweet, juicy and rich in vitamin C.",veg:"Low in calories, high in vitamins and fiber.",base:"Grains, dairy, meat, fish, beans, nuts and seeds.",drinks:"Juices, coffee, tea, milk drinks and more.",sweets:"Cakes, ice creams, cookies and sweets from many countries.",west:"Popular dishes from Europe and the Americas.",east:"Popular dishes from India, China, Japan, Korea, Thailand and the Middle East."};
+function category(cat){
+  var c=DATA[cat];
+  app.innerHTML='<button class="back" data-go="#/">← Home</button>'+
+    '<section class="hero col" style="--c:'+c.color+'"><div class="big">'+c.emoji+'</div><div><h1>'+c.label+'</h1><p>'+c.items.length+' foods. '+BL[cat]+'</p></div></section>'+
+    '<input class="search" id="cq" type="search" placeholder="Filter '+c.label.toLowerCase()+'" aria-label="Filter foods" style="margin:18px 0" autocomplete="off"><div id="cl"></div>';
+  var q=document.getElementById("cq");
+  function draw(){
+    var t=q.value.trim().toLowerCase(),h="";
+    c.items.forEach(function(x,i){if(x[0].toLowerCase().indexOf(t)>-1)h+=itemBtn(cat,i,x)});
+    document.getElementById("cl").innerHTML=h?'<div class="list">'+h+'</div>':'<div class="empty">No match for “'+esc(q.value)+'”. Please write it the way it appears in this category, otherwise it cannot be detected.</div>';
+  }
+  q.addEventListener("input",draw);draw();window.scrollTo(0,0);
+}
+
+// PAGE 3: one food
+function detail(cat,i){
+  var c=DATA[cat],x=c&&c.items[i];
+  if(!x){location.hash="#/";return}
+  var s=sv(x);
+  var rows=[["Fiber",s.fi,28],["Sugar",s.s,50]].map(function(m){
+    return '<div class="row"><span>'+m[0]+'</span><div class="bar"><i style="width:'+Math.min(100,m[1]/m[2]*100)+'%"></i></div><b>'+m[1]+' g</b></div>';
+  }).join("");
+  var chips=s.micro.map(function(v){return '<span class="chip">'+esc(v[0])+' <b>'+v[1]+'</b></span>'}).join("");
+  app.innerHTML='<button class="back" data-go="#/cat/'+cat+'">← Back to '+c.label+'</button>'+
+    '<section class="hero col" style="--c:'+c.color+'"><div class="big">'+x[1]+'</div><div><h1>'+esc(x[0])+'</h1><p>1 serving: '+esc(s.label)+' ('+s.g+' g)</p></div>'+
+    '<div style="margin-left:auto;text-align:right"><div class="kcal">'+s.kcal+'</div><p>calories (kcal)</p></div></section>'+
+    '<section class="card" style="--c:'+c.color+'"><h2>Main nutrients</h2><div class="stats"><div class="stat"><b>'+s.p+'g</b><small>Protein</small></div><div class="stat"><b>'+s.c+'g</b><small>Carbs</small></div><div class="stat"><b>'+s.f+'g</b><small>Fat</small></div></div>'+rows+'</section>'+
+    '<section class="card"><h2>Vitamins and minerals</h2><div class="chips">'+chips+'</div></section>'+
+    '<p class="note">Values are for one serving and are approximate.</p>';
+  window.scrollTo(0,0);
+}
+
+// PAGE 4: calculator (breakfast, lunch, dinner)
+function allFoods(){var a=[];Object.keys(DATA).forEach(function(k){DATA[k].items.forEach(function(x,i){a.push([k,i,x])})});return a}
+function calc(){
+  app.innerHTML='<h1>Let’s calculate</h1><p class="sub">Type any food. The spelling does not need to be exact. Tap a suggestion or press Enter to add it, and use + and − for servings. You can also write a number, like “2 paratha” or “chiken biryani, lassi”.</p>'+
+    MEAL.map(function(m){return '<section class="card meal" style="--c:'+m[3]+'"><h2>'+m[2]+' '+m[1]+'</h2><div id="l-'+m[0]+'"></div><input class="search" data-m="'+m[0]+'" type="search" placeholder="Type a food, e.g. 2 paratha" autocomplete="off"><div class="sug" id="s-'+m[0]+'"></div></section>'}).join("")+
+    '<button class="go wide" data-go="#/results">Calculate my nutrition</button>';
+  MEAL.forEach(function(m){drawMeal(m[0])});
+  Array.prototype.forEach.call(document.querySelectorAll("[data-m]"),function(inp){
+    inp.addEventListener("input",function(){suggest(inp.getAttribute("data-m"),inp.value)});
+    inp.addEventListener("keydown",function(e){if(e.key!=="Enter")return;e.preventDefault();var m=inp.getAttribute("data-m"),miss=addText(m,inp.value);inp.value=miss.join(", ");document.getElementById("s-"+m).innerHTML=miss.length?NOMATCH(miss):""});
+  });
+  window.scrollTo(0,0);
+}
+function drawMeal(m){
+  var h=meals[m].map(function(e,n){var x=DATA[e[0]].items[e[1]],s=sv(x);
+    return '<div class="entry"><span class="e">'+x[1]+'</span><span class="en"><b>'+esc(x[0])+'</b><small>'+e[2]+' × '+esc(s.label)+' = '+Math.round(s.kcal*e[2])+' kcal</small></span>'+
+      '<button class="qb" data-q="'+m+','+n+',-1" aria-label="Less">−</button><button class="qb" data-q="'+m+','+n+',1" aria-label="More">+</button><button class="qb" data-q="'+m+','+n+',0" aria-label="Remove">×</button></div>';
+  }).join("");
+  document.getElementById("l-"+m).innerHTML=h||'<p class="empty" style="margin:0">Nothing added yet.</p>';
+}
+// Smart matching: finds foods even with typos, a different word order, partial words or other spellings
+var SYN=[["aloo","alu","aaloo","potato","potatoes"],["gobi","gobhi","cauliflower"],["tea","chai"],["yogurt","yoghurt","curd","dahi"],["roti","chapati","chapatti","phulka"],["paratha","parantha","prantha","parotta","parota"],["pakora","pakoda","pakoray","pakore","fritters","bhajia"],["biryani","biriyani","briyani","biriani"],["chicken","chiken","murgh","murghi"],["mutton","lamb","gosht"],["lentil","lentils","dal","daal","dhal"],["chickpea","chickpeas","chana","chole","cholay","garbanzo"],["eggplant","aubergine","brinjal","baingan"],["okra","bhindi","ladyfinger"],["spinach","palak"],["corn","maize","makki"],["cilantro","coriander","dhania"],["donut","doughnut"],["mince","minced","keema","qeema"],["prawn","prawns","shrimp","shrimps"],["rice","chawal"],["milkshake","shake"],["kebab","kabab","kebap","kabob","kebabs"],["samosa","samosas","samosay"],["cookie","cookies","biscuit","biscuits"],["noodle","noodles"],["egg","eggs","anda","ande"],["fish","machli"],["pumpkin","kaddu"],["lauki","dudhi"],["radish","mooli","muli"],["mint","pudina"],["fenugreek","methi"],["turnip","shalgam"],["carrot","gajar"],["peas","matar","mutter"],["tomato","tomatoes","tamatar"],["onion","onions","pyaz","pyaaz"],["garlic","lehsun"],["ginger","adrak"],["milk","doodh","dudh"],["butter","makhan"],["lemon","nimbu","limbu"],["mango","mangoes","aam"],["banana","bananas","kela"],["apple","apples","seb"],["orange","oranges","santra","malta"],["pomegranate","anar"],["watermelon","tarbooz","tarbuz"],["grapes","grape","angoor"],["guava","amrood"],["dates","date","khajoor","khajur"],["coconut","nariyal"],["almond","almonds","badam"],["cashew","cashews","kaju"],["pistachio","pistachios","pista"],["peanut","peanuts","moongphali"],["sugarcane","ganna"],["lassi","lasi"],["kheer","khir"],["halwa","halva","halua"],["jalebi","jilebi"],["naan","nan"],["curry","salan","salaan"],["coffee","coffe","kofi"],["burger","burgar","burgr","burgers"],["sandwich","sandwhich","sandwitch","sandwiches"],["fried","fry"],["soup","shorba"],["salad","salaad"]];
+var STOP={of:1,with:1,and:1,the:1,a:1,an:1,in:1,my:1,some:1,i:1,had:1,ate:1,piece:1,pieces:1,plate:1,bowl:1,cup:1,glass:1,serving:1,slice:1,slices:1};
+var GROUP={};SYN.forEach(function(g,i){g.forEach(function(w){GROUP[w]=i})});
+function toks(s){
+  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g," ").trim().split(" ").filter(function(w){return w&&!STOP[w]});
+}
+function lev(a,b,max){
+  if(Math.abs(a.length-b.length)>max)return max+1;
+  var p=[],i,j;for(j=0;j<=b.length;j++)p[j]=j;
+  for(i=1;i<=a.length;i++){var c=[i];for(j=1;j<=b.length;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}
+  return p[b.length];
+}
+function tokBase(q,n,nl){
+  if(q===n)return 1;
+  if(q.length>=2&&n.indexOf(q)===0)return .9;
+  if(n.length>=3&&q.indexOf(n)===0)return .85;
+  if(q.length>=4&&n.indexOf(q)>-1)return .7;
+  if(q.length>=3&&!nl){var m=q.length>=6?2:1;if(lev(q,n,m)<=m)return q.length>=6?.75:.8}
+  return 0;
+}
+function tokScore(q,n){
+  var best=tokBase(q,n),i,s;
+  if(best<1&&GROUP[n]!==undefined){
+    var g=SYN[GROUP[n]];
+    for(i=0;i<g.length;i++){s=g[i]===q?.95:tokBase(q,g[i])*.95;if(n===g[0])s+=.01;if(s>best)best=s}
+  }
+  if(best<1&&GROUP[q]!==undefined){
+    var h=SYN[GROUP[q]];
+    for(i=0;i<h.length;i++){s=tokBase(h[i],n,1)*.95;if(h[i].length>=5&&n.slice(-h[i].length)===h[i])s=.88;if(s>best)best=s}
+  }
+  return best;
+}
+function scoreFood(qt,name){
+  var nt=toks(name);if(!qt.length||!nt.length)return[0,0,0];
+  var sum=0,min=1,max=0,hit={};
+  qt.forEach(function(q){var bs=0;nt.forEach(function(n,i){var s=tokScore(q,n);if(s>bs){bs=s;if(s>=.6)hit[i]=1}});sum+=bs;if(bs<min)min=bs;if(bs>max)max=bs});
+  var avg=sum/qt.length,cov=Object.keys(hit).length/nt.length,sc=avg+.1*cov;
+  if(min<.6)sc*=.6;
+  var qj=qt.join(""),nj=nt.join("");
+  if(qj.length>=4){var j=nj.indexOf(qj)>-1?.9:(lev(qj,nj,2)<=2?.85:0);if(j>sc)sc=j}
+  return[sc,avg,max];
+}
+function rank(text){
+  var qt=toks(text);if(!qt.length)return[];
+  var all=allFoods().map(function(a){var s=scoreFood(qt,a[2][0]);return[a,s[0],s[1],s[2]]});
+  var good=all.filter(function(r){return r[1]>=.6});
+  if(!good.length)good=all.filter(function(r){return r[3]>=.8&&r[2]>=.45}).map(function(r){return[r[0],r[2]]});
+  good.sort(function(x,y){return y[1]-x[1]||x[0][2][0].length-y[0][2][0].length});
+  return good.slice(0,8).map(function(r){return r[0]});
+}
+var NUMW={one:1,two:2,three:3,four:4,five:5,six:6,half:.5,a:1,an:1};
+function parseQty(s){
+  var m=/^\s*(\d+(?:\.\d+)?|½|one|two|three|four|five|six|half|an?)\s*(?:x|×)?\s+(.+)$/i.exec(s);
+  if(!m)return[1,s];
+  var w=m[1].toLowerCase(),q=w==="½"?.5:(NUMW[w]!==undefined?NUMW[w]:parseFloat(w));
+  q=Math.min(20,Math.max(.5,Math.round(q*2)/2));
+  return[q,m[2]];
+}
+function addFood(m,a,q){
+  var ex=meals[m].filter(function(r){return r[0]===a[0]&&r[1]===a[1]})[0];
+  if(ex)ex[2]+=q;else meals[m].push([a[0],a[1],q]);
+}
+function addText(m,text){
+  var miss=[];
+  text.split(/,|\+|;|&|\n|\band\b/i).forEach(function(part){
+    part=part.trim();if(!part)return;
+    var pq=parseQty(part),r=rank(pq[1]);
+    if(r.length)addFood(m,r[0],pq[0]);else miss.push(part);
+  });
+  drawMeal(m);
+  return miss;
+}
+var NOMATCH=function(list){return '<small class="sub" style="color:var(--red)">No match for '+list.map(function(x){return '“'+esc(x)+'”'}).join(", ")+'. Please check the spelling or write it the way it appears in the categories (for example “Chicken biryani”), otherwise it cannot be detected.</small>'};
+function suggest(m,v){
+  var box=document.getElementById("s-"+m),segs=v.split(/,|\+|;|&|\n|\band\b/i),last=segs[segs.length-1].trim();
+  if(!last){box.innerHTML="";return}
+  var pq=parseQty(last),r=rank(pq[1]);
+  if(!r.length){box.innerHTML=NOMATCH([last]);return}
+  box.innerHTML='<small class="sub" style="width:100%;margin:0">Tap a food, or press Enter to add the best match.</small>'+r.map(function(a,i){
+    return '<button class="chip" style="'+(i?'':'border-color:var(--brand);font-weight:600')+'" data-add="'+m+','+a[0]+','+a[1]+','+pq[0]+'">'+a[2][1]+' '+esc(a[2][0])+'</button>';
+  }).join("");
+}
+function flushInputs(){
+  var bad=false;
+  Array.prototype.forEach.call(document.querySelectorAll("[data-m]"),function(inp){
+    if(!inp.value.trim())return;
+    var m=inp.getAttribute("data-m"),miss=addText(m,inp.value);
+    if(miss.length){bad=true;inp.value=miss.join(", ");document.getElementById("s-"+m).innerHTML=NOMATCH(miss)}
+    else{inp.value="";document.getElementById("s-"+m).innerHTML=""}
+  });
+  return bad;
+}
+
+// PAGE 5: results
+var DV=[["Protein","g",50],["Carbs","g",275],["Fat","g",78],["Fiber","g",28],["Vitamin C","mg",90],["Vitamin A","µg",900],["Vitamin K","µg",120],["Vitamin E","mg",15],["Vitamin B6","mg",1.7],["Vitamin B12","µg",2.4],["Vitamin D","µg",15],["Folate","µg",400],["Calcium","mg",1000],["Iron","mg",18],["Potassium","mg",3400],["Magnesium","mg",400],["Manganese","mg",2.3],["Phosphorus","mg",700],["Selenium","µg",55],["Niacin","mg",16],["Zinc","mg",11]];
+function topFoods(name){
+  var nu=NUTS.filter(function(n){return n.n===name})[0];
+  return allFoods().map(function(a){return[a[2][0],amt(a[2],nu)]}).sort(function(a,b){return b[1]-a[1]}).slice(0,3).map(function(a){return a[0].toLowerCase()}).join(", ");
+}
+function results(){
+  var t={kcal:0,p:0,c:0,f:0,fi:0,s:0},mic={},per={},count=0,ent=[];
+  MEAL.forEach(function(m){per[m[0]]=0;meals[m[0]].forEach(function(e){
+    count++;var s=sv(DATA[e[0]].items[e[1]]),q=e[2],ev={Calories:s.kcal*q,Protein:s.p*q,Carbs:s.c*q,Fat:s.f*q,Sugar:s.s*q};ent.push([DATA[e[0]].items[e[1]][0],ev]);
+    per[m[0]]+=s.kcal*q;t.kcal+=s.kcal*q;t.p+=s.p*q;t.c+=s.c*q;t.f+=s.f*q;t.fi+=s.fi*q;t.s+=s.s*q;
+    s.micro.forEach(function(v){mic[v[0]]=(mic[v[0]]||0)+parseFloat(v[1])*q;ev[v[0]]=parseFloat(v[1])*q});
+  })});
+  if(!count){app.innerHTML='<button class="back" data-go="#/calc">← Back</button><div class="empty">Add at least one food to a meal first.</div>';return}
+  var val={Protein:t.p,Carbs:t.c,Fat:t.f,Fiber:t.fi},low=[],ok=[];
+  DV.forEach(function(d){var a=val[d[0]]!==undefined?val[d[0]]:(mic[d[0]]||0),pc=a/d[2]*100;(pc<100?low:ok).push([d,a,pc])});
+  low.sort(function(a,b){return a[2]-b[2]});
+  var LIM=[["Calories","kcal",2200,t.kcal],["Carbs","g",325,t.c],["Fat","g",100,t.f],["Sugar","g",50,t.s],["Protein","g",150,t.p],["Vitamin A","µg",3000],["Vitamin D","µg",100],["Vitamin C","mg",2000],["Vitamin E","mg",1000],["Vitamin B6","mg",100],["Calcium","mg",2500],["Iron","mg",45],["Zinc","mg",40],["Selenium","µg",400],["Manganese","mg",11],["Phosphorus","mg",4000],["Niacin","mg",35]],over=[];
+  LIM.forEach(function(l){var v=l[3]!==undefined?l[3]:(mic[l[0]]||0);if(v>l[2])over.push([l,v])});
+  var ovN=over.map(function(o){return o[0][0]});ok=ok.filter(function(r){return ovN.indexOf(r[0][0])<0});
+  function ovH(o){var l=o[0],top=ent.filter(function(x){return x[1][l[0]]>0}).sort(function(a,b){return b[1][l[0]]-a[1][l[0]]}).slice(0,2).map(function(x){return x[0].toLowerCase()}).join(", ");
+    return '<div class="nrow red"><div class="nt"><b>'+l[0]+'</b><span>'+fmt(o[1])+' '+l[1]+'</span></div><div class="bar"><i style="width:100%"></i></div><small>Above the limit of '+l[2]+' '+l[1]+'. Having this much is not okay for your health.'+(top?' Mostly from: '+top+'. Please eat less of these.':'')+'</small></div>';
+  }
+  function rowH(r,red){var d=r[0];
+    return '<div class="nrow '+(red?'red':'ok')+'"><div class="nt"><b>'+d[0]+'</b><span>'+fmt(r[1])+' / '+d[2]+' '+d[1]+'</span></div><div class="bar"><i style="width:'+Math.min(100,r[2])+'%"></i></div>'+
+      (red?'<small>You need '+fmt(d[2]-r[1])+' '+d[1]+' more. Try: '+topFoods(d[0])+'.</small>':'')+'</div>';
+  }
+  var perH=MEAL.map(function(m){return '<span class="chip">'+m[2]+' '+m[1]+' <b>'+Math.round(per[m[0]])+' kcal</b></span>'}).join("");
+  app.innerHTML='<button class="back" data-go="#/calc">← Edit meals</button>'+
+    '<section class="hero col" style="--c:var(--brand)"><div><div class="kcal">'+Math.round(t.kcal)+' kcal</div><p>Estimated total today, about '+Math.round(t.kcal/20)+'% of a 2,000 kcal day'+(t.kcal>2200?'. This is more than you need and not okay.':'')+'</p></div></section>'+
+    '<div class="chips" style="margin-top:14px">'+perH+'</div>'+
+    '<section class="card"><h2>What you ate</h2><div class="stats"><div class="stat"><b>'+fmt(t.p)+'g</b><small>Protein</small></div><div class="stat"><b>'+fmt(t.c)+'g</b><small>Carbs</small></div><div class="stat"><b>'+fmt(t.f)+'g</b><small>Fat</small></div></div>'+
+    '<div class="chips"><span class="chip">Fiber <b>'+fmt(t.fi)+' g</b></span><span class="chip">Sugar <b>'+fmt(t.s)+' g</b></span></div></section>'+
+    (over.length?'<section class="needbox"><h2>🚫 Too much today ('+over.length+')</h2><p class="sub" style="color:var(--red)">You had more than the healthy limit of these. This is not okay if it happens often.</p>'+over.map(ovH).join("")+'</section>':'')+
+    (low.length?'<section class="needbox"><h2>⚠️ You still need ('+low.length+')</h2><p class="sub" style="color:var(--red)">These essential nutrients are below your daily need. Eat more of them.</p>'+low.map(function(r){return rowH(r,true)}).join("")+'</section>':'')+
+    (ok.length?'<section class="card okbox"><h2>✅ Daily need reached ('+ok.length+')</h2>'+ok.map(function(r){return rowH(r,false)}).join("")+'</section>':'')+
+    '<p class="note">Estimate based on the main nutrients listed for each food and typical adult daily needs. It is general information, not medical advice.</p>';
+  window.scrollTo(0,0);
+}
+
+// Meta data: keeps the page title and descriptions correct for every page
+var SITE_TITLE=document.title,SITE_DESC=(document.querySelector('meta[name="description"]')||{}).content||"";
+function setM(sel,v){var e=document.querySelector(sel);if(e)e.setAttribute("content",v)}
+function updateMeta(){
+  var p=location.hash.replace(/^#\/?/,"").split("/"),t=SITE_TITLE,d=SITE_DESC;
+  if(p[0]==="item"&&DATA[p[1]]&&DATA[p[1]].items[+p[2]]){
+    var x=DATA[p[1]].items[+p[2]],s=sv(x);
+    t=x[0]+" – calories and nutrients per serving | Nutrical";
+    d=x[0]+" ("+s.label+", "+s.g+" g): "+s.kcal+" kcal, "+s.p+" g protein, "+s.c+" g carbs, "+s.f+" g fat, plus vitamins and minerals.";
+  }else if(p[0]==="cat"&&DATA[p[1]]){
+    var c=DATA[p[1]];
+    t=c.label+" – calories and nutrients | Nutrical";
+    d="Browse "+c.items.length+" foods in the "+c.label+" category with calories, protein, carbs, fat, vitamins and minerals per serving.";
+  }else if(p[0]==="calc"){
+    t="Daily meal calculator | Nutrical";
+    d="Add your breakfast, lunch and dinner to estimate calories and nutrients, and see which essential nutrients you are missing.";
+  }else if(p[0]==="results"){
+    t="Your nutrition results | Nutrical";
+    d="See your estimated calories, the nutrients you still need and anything you had too much of.";
+  }
+  document.title=t;
+  setM('meta[name="description"]',d);setM('meta[property="og:title"]',t);setM('meta[property="og:description"]',d);
+  setM('meta[name="twitter:title"]',t);setM('meta[name="twitter:description"]',d);
+}
+function route(){routeInner();updateMeta()}
+function routeInner(){
+  var p=location.hash.replace(/^#\/?/,"").split("/");
+  if(p[0]==="item")detail(p[1],+p[2]);
+  else if(p[0]==="cat"&&DATA[p[1]])category(p[1]);
+  else if(p[0]==="calc")calc();
+  else if(p[0]==="results")results();
+  else{home();window.scrollTo(0,0)}
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-go]"),a=e.target.closest("[data-add]"),q=e.target.closest("[data-q]");
+  if(b){if(b.getAttribute("data-go")==="#/results"&&document.querySelector("[data-m]")&&flushInputs())return;location.hash=b.getAttribute("data-go")}
+  if(a){
+    var p=a.getAttribute("data-add").split(","),m=p[0],ex=meals[m].filter(function(r){return r[0]===p[1]&&r[1]===+p[2]})[0];
+    var qty=+p[3]||1;if(ex)ex[2]+=qty;else meals[m].push([p[1],+p[2],qty]);
+    var inp=document.querySelector('[data-m="'+m+'"]');inp.value="";document.getElementById("s-"+m).innerHTML="";drawMeal(m);
+  }
+  if(q){
+    var r=q.getAttribute("data-q").split(","),e2=meals[r[0]][+r[1]],d=+r[2];
+    if(d===0)meals[r[0]].splice(+r[1],1);
+    else{e2[2]+=d*.5;if(e2[2]<=0)meals[r[0]].splice(+r[1],1)}
+    drawMeal(r[0]);
+  }
+});
+window.addEventListener("hashchange",route);
+route();
+</script>
+</body>
+</html>
